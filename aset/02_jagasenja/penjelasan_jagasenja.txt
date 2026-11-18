@@ -1,0 +1,71 @@
+JAGASENJA  [UI/UX]
+================================================================================================
+Aplikasi pengingat kesehatan lansia yang menghubungkan Guardian (keluarga) dan Lansia dengan
+alert darurat.
+
+RINGKASAN PROJECT
+-----------------
+JagaSenja adalah rancangan aplikasi pengingat kesehatan untuk lansia dengan tema "Health for
+All". Aplikasi memiliki dua tipe pengguna: Guardian (keluarga atau pendamping) yang menyiapkan
+kebutuhan lansia, dan Lansia yang memakai antarmuka sangat sederhana. Konsep dipresentasikan
+lewat video 6 menit yang dibawakan 4 orang.
+
+LATAR BELAKANG & MASALAH
+------------------------
+Banyak lansia tinggal sendirian dan sulit mengakses layanan kesehatan, terutama saat darurat.
+Pendamping yang tinggal jauh tidak segera tahu ketika lansia jatuh atau sakit karena
+keterbatasan teknologi dan layanan darurat.
+
+TUJUAN
+------
+  - Menjaga kesehatan lansia sekaligus memberi ketenangan bagi keluarga.
+  - Memantau aktivitas penting (minum obat, olahraga, checkup) secara langsung.
+  - Mewujudkan layanan kesehatan yang merata, inklusif, dan adaptif bagi kelompok rentan
+    (lansia, penyandang disabilitas, keterbatasan ekonomi, daerah terpencil).
+
+FITUR UTAMA
+-----------
+  - Antarmuka Guardian: input jadwal minum obat, jenis olahraga, dan jadwal checkup (harian,
+    mingguan, atau sekali), lengkap dengan dosis, nama dokter, nama rumah sakit, dan foto obat.
+  - Antarmuka Lansia: tulisan besar, warna kontras, ikon jelas, tombol sederhana, dan masuk
+    memakai kode OTP dari Guardian tanpa registrasi.
+  - Minum obat: lansia menekan "Sudah Minum" dan sistem merekam video singkat sebagai bukti
+    untuk Guardian.
+  - Olahraga: dipantau lewat rekaman singkat.
+  - Checkup: lokasi lansia dideteksi sejak berangkat hingga tiba di rumah sakit, dan Guardian
+    diberi tahu bila terlambat.
+  - Alert darurat: terkirim ke Guardian bila lansia melewatkan lebih dari 2 pengingat dalam
+    sehari; Guardian dapat menelepon lansia atau menekan tombol hotline medis.
+  - Dapat dipakai dengan koneksi internet minimal untuk guardian di daerah terpencil.
+
+KEY RESOURCE
+------------
+  - Konteks: Konsep UI/UX untuk kompetisi bertema "Health for All" dengan video presentasi 6
+    menit (4 pembicara)
+  - Dokumen: Naskah video: latar belakang masalah, tujuan, analisis desain produk, visualisasi
+    dan penutup
+  - Tools: Figma (file "LANSIA")
+  - Pengguna: Guardian dan Lansia
+
+ALUR SINGKAT
+------------
+Guardian mengatur jadwal, lansia masuk dengan OTP dan menerima pengingat bersuara. Lansia
+merespons dengan bukti video, rekaman olahraga, atau pelacakan lokasi checkup. Jika lebih dari
+dua pengingat terlewat dalam sehari, alert darurat dikirim ke Guardian.
+
+DESIGN SYSTEM (RINGKAS)
+-----------------------
+Antarmuka lansia mengutamakan keterbacaan: font besar, kontras warna tinggi, ikon jelas, dan
+navigasi lurus. Nuansa terakota hangat dipadukan dengan ilustrasi keluarga dan lansia yang
+ramah.
+Palet: Terracotta #BB5D57, Deep Maroon #703D3A, Sand #CCA490, Blush #E0D4CD, Snow #FCFAFA, Ink
+#181618, Alert Red #D64545
+Font: Poppins
+
+DIAGRAM
+-------
+  - diagram_alur_guardian_lansia.png: Alur Pengingat & Alert Darurat
+
+TAUTAN FIGMA
+------------
+https://www.figma.com/design/PACGthQTo4RZ5NVmywXmz9/LANSIA?m=auto&t=UX0xlSJ8Msib0BMB-6

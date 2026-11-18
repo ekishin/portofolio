@@ -1,0 +1,77 @@
+                                          EKI SHINTA MAHARANI
+
+                      +6289648257682 | ekishintamaharani@gmail.com | linkedin.com/in/ekishinta | ekishinta.vercel.app
+
+Software Engineering Technology undergraduate at IPB University with comprehensive hands-on experience in Full-Stack Web
+Development, System Analysis, and UI/UX Design. Proficient in translating complex business requirements into structured system
+documentation (SRS, UML, ERD), intuitive UI prototypes, and scalable web/mobile architectures. Currently focused on building high-
+impact digital products across 10+ technical projects while seeking a Software Engineering, Web Developer. Proven ability to
+collaborate in teams alongside strong leadership and financial administration experience in campus organizations.
+
+Education
+
+IPB University - Bogor, Indonesia                                   Aug 2024 - Jun 2028 (Expected)
+
+Bachelor of Applied Science in Software Engineering, 3.55/4.00
+
+Relevant Coursework: Web Programming, Software Analysis & Design, Software Requirements Engineering, Database Systems, Data
+Structures & Algorithms, Virtual Technology, Data Mining, Geographic Information Systems.
+
+Organization and Leadership
+
+Kesatuan Mahasiswa Hindu Dharma IPB - Bogor, Indonesia                                                                 Jan 2025 ­ Present
+
+Secretary & Treasurer of Human Resource Development Division
+
+Managed administrative documentation, program proposals, and financial budgeting for division-wide cadre development
+programs with 100% financial accountability.
+Streamlined internal administration and member performance tracking using Notion and Google Workspace.
+
+SITE TPL SV IPB - Bogor, Indonesia                                                                                     Aug 2025 ­ Nov 2025
+
+Head of Public Relations Division
+
+Directed creative content production and digital campaign strategies as Head of Public Relations, generating 5k+ views per post
+and driving a 150+ follower growth while maintaining a cohesive visual identity across departmental platforms.
+Directed communication timelines and participant onboarding information, achieving smooth cross-divisional coordination.
+
+Rakernas KMHDI XVI (National Working Meeting) - Jakarta, Indonesia                                                     Jun 2026 ­ Jul 2026
+
+Event Division Staff
+
+Conceptualized and executed end-to-end event rundowns and plenary session flows for a national-scale student conference attended
+by delegates across Indonesia.
+
+Projects                                                                                                                                    .
+
+Unravel | Competition Project
+
+Developed an interactive EdTech platform built with Next.js, Go (Golang), and PostgreSQL in 2-week Agile Scrum sprints to train
+student problem-solving through Question Chains.
+Implemented core learning modes featuring a drag-and-drop Logic Canvas, level unlock engine, and collaborative case
+exploration with anonymity controls.
+
+FamsPay - Family Finance Management Platform | Campus Project
+
+    Engineered core RESTful APIs using PHP and Laravel, designing a document-oriented MongoDB database across 5 core
+    collections (users, families, transactions, goals, user_monthly_limits).
+    Implemented complex business logic for role-based visibility (Admin vs Member), period-bound monthly spending limits, and
+    automated goal-linked system transactions.
+
+TechnoPlay ­ Interactive Virtual Technology & AR Learning App | Campus Project
+    Developed an interactive educational game and Marker-based Augmented Reality mobile application using Unity Engine (C#) for
+    Virtual Technology coursework.
+    Implemented 3D scene tracking, material layering composition (Background, Middleground, Foreground), and frame-rate
+    simulation challenges (24/30/60 fps).
+    Successfully secured an official Intellectual Property Right (HAKI) for the application's educational framework and design.
+
+Skills and Achievements
+
+      Tools: VS Code, Git & GitHub, MongoDB, Supabase, MySQL, PostgreSQL, Postman, FastAPI, Figma, Canva, QGIS, Unity, Notion, Google
+      Workspace.
+      Hard Skills: HTML, CSS, JavaScript, Python, R, PHP, Laravel, Blade, React.js, Next.js, Tailwind CSS, System Analysis (SRS, UML,
+      ERD, DFD), Design System.
+      Soft Skills: Problem-Solving, Analytical & Structured Thinking, Collaboration, Public Relations & Stakeholder Communication, Project
+      Budgeting & Administration, Leadership, Time Management, Adaptability.
+      Achievements (2026): Finalist at Smart Data Analytics Competition (Universitas Syiah Kuala).
+

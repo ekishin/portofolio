@@ -1,0 +1,197 @@
+ROADSAFE  [WEB DASHBOARD & MOBILE]
+================================================================================================
+Sistem deteksi dan klasifikasi tingkat urgensi jalan berlubang berbasis YOLO11 Instance
+Segmentation, dengan pelaporan real-time (Smart Auto-Capture) dan unggah foto terintegrasi GPS,
+yang terhubung ke dashboard Dishub / Dinas PU.
+
+RINGKASAN PROJECT
+-----------------
+RoadSafe adalah platform pelaporan dan penilaian kerusakan jalan berlubang. Pelapor (masyarakat,
+relawan, pengemudi) melaporkan lubang lewat dua mode: kamera real-time yang memotret otomatis,
+atau unggah foto manual. Model YOLO11-seg mendeteksi lubang beserta polygon mask, lalu sistem
+menghitung Skor Urgensi 0-100 dan mengelompokkannya menjadi Low, Medium, atau High. Semua laporan
+dipetakan secara spasial (PostgreSQL + PostGIS) agar petugas Dishub / Dinas PU dapat memverifikasi
+dan memperbarui status penanganan. SRS versi 1.1 (4 November 2026), mengacu kerangka IEEE 830
+yang disederhanakan, menjadi acuan tim Computer Vision, Frontend Web, dan Backend.
+
+LATAR BELAKANG & MASALAH
+------------------------
+Pelaporan jalan berlubang yang masih manual membuat instansi sulit mengetahui lokasi pasti,
+tingkat bahaya, dan urutan prioritas perbaikan. Laporan ganda pada lubang yang sama menumpuk, dan
+petugas tidak punya bukti visual yang seragam. Merekam video panjang juga boros kuota dan
+penyimpanan, sehingga petugas harus menonton rekaman untuk menemukan satu lubang.
+
+TUJUAN
+------
+  - Mendeteksi dan mensegmentasi lubang jalan secara otomatis dari kamera smartphone (hands-free)
+    maupun foto unggahan warga.
+  - Menghitung skor dan kategori urgensi yang terukur (L, K, P, T) agar prioritas perbaikan
+    objektif dan dapat diaudit.
+  - Memberi petugas Dishub peta, foto bukti, dan navigasi lokasi dalam satu dashboard, lengkap
+    dengan siklus status penanganan.
+  - Menjaga efisiensi: hanya foto bukti (JPG/WEBP, maks. 400 KB) yang disimpan, bukan video mentah.
+  - Memenuhi target model: mAP@0,5 >= 0,70, recall >= 0,75, presisi >= 0,80 (NFR-03).
+
+PENGGUNA
+--------
+  - Pelapor (masyarakat / relawan / pengemudi): memakai tampilan mobile untuk Kamera HUD, melihat
+    Riwayat laporan, dan melihat Peta Sebaran. Kemampuan teknis dasar.
+  - Petugas Instansi (Dishub / Dinas PU / organisasi): memakai web dashboard untuk verifikasi,
+    navigasi lapangan, dan pembaruan status. Kemampuan teknis menengah.
+  - Administrator Sistem: mengelola akun petugas, bobot urgensi, ambang confidence, dan versi
+    model.
+
+FITUR UTAMA
+-----------
+Mobile (pelapor)
+  - Kamera HUD (Mode 1): kamera belakang dibuka lewat browser, frame dikirim 4-5 FPS bersama GPS
+    live. Overlay bounding box dan mask tampil real-time. Setelah tombol mulai ditekan, proses
+    berjalan hands-free dengan notifikasi ringan di layar saat lubang berhasil dilaporkan.
+  - Unggah Foto (Mode 2): foto JPG/PNG/WEBP, lokasi dari EXIF atau GPS browser, dan pin dapat
+    digeser di peta interaktif. Hasil segmentasi dan rincian skor L, K, P, T ditampilkan sebelum
+    laporan dikirim. Jika tidak ada lubang terdeteksi, pelapor diberi peringatan.
+  - Riwayat: daftar laporan milik pelapor beserta status penanganannya.
+  - Peta Sebaran: peta dengan filter chip (Semua, Tinggi, Sedang, Rendah) dan marker berwarna
+    sesuai urgensi. Kartu detail menampilkan badge urgensi, skor, waktu, alamat, koordinat GPS
+    dan akurasi, tipe kerusakan, luas, posisi pada lajur, kelas jalan, status, dan tombol
+    "Buka Navigasi Rute".
+
+Web dashboard (petugas Dishub / Dinas PU)
+  - Tab Verifikasi dan Analitik, indikator server live (PostGIS spasial aktif), tombol Ekspor
+    Data (.CSV), dan identitas petugas.
+  - Kartu statistik: Total Laporan Terdata, Menunggu Verifikasi, Terverifikasi & Ditangani,
+    Selesai Ditambal.
+  - Daftar Deteksi & Antrean Verifikasi: kolom Bukti (foto diburamkan), Urgensi, Skor, Ruas Jalan,
+    Deduplikasi (jumlah "x Terlapor"), dan Status. Tersedia pencarian jalan, filter status, dan
+    filter urgensi.
+  - Peta GIS dengan lapisan OpenStreetMap, Satelit, dan Heatmap, serta legenda urgensi dan
+    jumlah titik per kategori.
+  - Detail laporan: foto asli, foto visualisasi mask AI, nilai L/K/P/T, jumlah pelapor, tombol
+    Google Maps, form status, dan unggah foto bukti sesudah perbaikan.
+
+Sistem (backend)
+  - Smart Auto-Capture: lubang dikonfirmasi bila terdeteksi pada minimal 3 dari 5 frame
+    berurutan dengan confidence >= 0,50. Sistem memilih satu best-frame (confidence tertinggi
+    dan posisi proporsional di ROI), menyimpannya sebagai foto asli dan foto visualisasi AI,
+    lalu mengunggahnya dengan GPS saat frame diambil. Cooldown lokal (radius 10 m / beberapa
+    detik) mencegah pemotretan berulang. Target: selesai <= 2 detik setelah terkonfirmasi.
+  - Deduplikasi spasial PostGIS (ST_DWithin, radius 10-15 m): laporan baru di dekat laporan
+    aktif digabung, jumlah_terlapor bertambah, dan foto bukti diperbarui bila confidence lebih
+    tinggi.
+  - Reverse geocoding nama jalan (Nominatim) dan kelas jalan dari tag highway OpenStreetMap
+    (Overpass API).
+  - Rate limiting untuk mencegah spam, dan antrean offline: foto hasil capture disimpan lokal di
+    browser lalu dikirim ulang saat koneksi pulih.
+
+MODEL PENILAIAN URGENSI
+-----------------------
+Skor Akhir = 0,35 L + 0,25 K + 0,20 P + 0,20 T  (semua parameter bernilai 0-100)
+
+  L  Luas Area Kerusakan (35%): rasio piksel mask terhadap luas ROI. Mode 1 dikoreksi perspektif
+     vertikal (lubang yang lebih jauh tampak lebih kecil). Mode 2 diredam akar kuadrat bila
+     rasio > 0,25 agar foto close-up tidak menggelembungkan skor.
+  K  Kedalaman & Bentuk (25%): 0,45 K_dark + 0,35 K_edge + 0,20 K_shape. Ini proksi visual dari
+     kamera tunggal (kontras kegelapan dalam mask terhadap cincin aspal sekitar, gradien tepi
+     Sobel, dan ketidakberaturan bentuk dari circularity). Bukan pengukuran kedalaman fisik.
+  P  Posisi pada Jalur (20%): deviasi horizontal pusat lubang dari tengah frame.
+       tengah lajur 85-100, lintasan ban 50-85, tepi jalan 20-50, bahu jalan 10-20.
+  T  Kelas Jalan / Lalu Lintas (20%): arteri primer (motorway/trunk/primary) 100, arteri
+     sekunder 80, kolektor (tertiary) 60, lokal (residential/unclassified/service) 30.
+
+Kategori: Low 0-33 (hijau, pemantauan berkala), Medium 33,01-66 (kuning, antrean pemeliharaan
+rutin), High 66,01-100 (merah, prioritas perbaikan segera).
+Override keselamatan: bila L >= 75, P >= 80, dan T >= 80, kategori otomatis High
+(override_aktif = True).
+
+Contoh pada mockup mobile: Jl. Pajajaran No. 45, Bogor, skor 78.4 (Tinggi), luas 86%, posisi Tepi
+Lajur, kelas jalan Kolektor, GPS -6.597147, 106.806038 (+-3.8 m).
+
+SIKLUS STATUS LAPORAN
+---------------------
+Pending -> Terverifikasi -> Dalam Perbaikan -> Sudah Diperbaiki, atau Ditolak (false positive /
+tidak valid) dengan catatan tindak lanjut. Setiap perubahan tercatat di STATUS_LOG. Petugas dapat
+mengunggah foto bukti sesudah perbaikan. Perubahan status maksimal 2 klik dari peta atau tabel
+(NFR-08). Laporan Terverifikasi atau Ditolak dapat ditandai sebagai data umpan balik untuk
+retraining model (FR-28).
+
+KEY RESOURCE
+------------
+  - Konteks: Proyek akademik (SRS satu semester, roadmap MVP 14 minggu) dengan evaluasi bersama
+    dosen.
+  - Model: YOLO11-seg (yolo11n-seg / yolo11s-seg), pembanding yolov8n-seg; fallback OpenCV
+    (Otsu Thresholding + morfologi) bila memakai model berbasis bounding box.
+  - Dataset: RDD2022 serta dataset pothole segmentation publik (Roboflow Universe / Kaggle),
+    ditambah data lokal.
+  - Stack: Frontend web responsif / PWA (Leaflet.js + OpenStreetMap), Backend Python FastAPI
+    (REST + WebSocket), PostgreSQL + PostGIS, penyimpanan file/objek untuk foto bukti.
+  - Modul: PotholeUrgencyCalculator (urgency_calculator.py).
+  - Dokumen: SRS RoadSafe v1.1.
+  - Pengguna: Pelapor, Petugas Dishub / Dinas PU, Administrator.
+
+ALUR SINGKAT
+------------
+Pelapor memilih Mode 1 (Kamera HUD) atau Mode 2 (Unggah Foto). YOLO11-seg mendeteksi lubang. Mode
+1 memotret best-frame otomatis setelah konfirmasi 3 dari 5 frame; Mode 2 menolak foto tanpa lubang.
+Sistem menghitung skor L, K, P, T, menerapkan override keselamatan, mencari nama jalan, dan
+memeriksa duplikat dalam radius 10-15 m. Laporan baru berstatus Pending atau digabung ke laporan
+yang ada. Marker muncul di peta, petugas memverifikasi foto dan lokasi, lalu memperbarui status
+sampai Sudah Diperbaiki.
+
+KEBUTUHAN NON-FUNGSIONAL (RINGKAS)
+----------------------------------
+  - Kinerja: stream Mode 1 minimal 5-10 FPS; Mode 2 hasil tampil <= 3 detik.
+  - Keamanan: HTTPS wajib, autentikasi petugas/admin, validasi format gambar.
+  - Privasi (UU PDP No. 27/2022): minim data identitas pelapor, mendukung blurring informasi
+    sensitif pada citra.
+  - Kegunaan: Mode 1 hands-free sepenuhnya setelah tombol mulai.
+
+PENGUJIAN & KRITERIA PENERIMAAN (RINGKAS)
+-----------------------------------------
+  - Komparasi YOLO11 vs YOLOv8 (mAP, presisi, recall, waktu inferensi).
+  - Uji jalan Mode 1 pada 3 ruas jalan (siang/sore); uji Mode 2 dengan 20 foto berlubang dan 10
+    foto jalan mulus.
+  - Validasi skor: kesesuaian kategori >= 70% terhadap penilaian manual 2-3 penilai pada 100
+    sampel, plus uji sensitivitas bobot +-10%.
+  - Uji deduplikasi (< 10 m menghasilkan 1 titik aktif) dan alur kerja petugas Dishub.
+
+RISIKO & MITIGASI
+-----------------
+  - Duplikasi foto beruntun: konfirmasi multi-frame, best-frame tunggal, cooldown, dan
+    deduplikasi PostGIS.
+  - Bias ukuran foto close-up: peredaman akar kuadrat pada L untuk Mode 2.
+  - Bayangan / genangan air pada estimasi K: K digabung dari tiga sub-fitur, tidak hanya
+    kegelapan piksel.
+  - Foto tanpa EXIF GPS: GPS browser dan pin peta manual.
+
+DESIGN SYSTEM (RINGKAS)
+-----------------------
+Nuansa biru yang bersih untuk dashboard monitoring, dengan warna urgensi merah-kuning-hijau yang
+konsisten di peta, badge, dan tabel. Nilai warna dan font diperkirakan dari mockup.
+Palet: Road Blue #3F66EC, Sky Tint #E9F1FE, Cloud #F5F6FB, Ink #121429, High #DD524D,
+Medium #E6A436, Low #5EC268
+Font: Inter
+
+DIAGRAM
+-------
+  - diagram_alur_roadasafe.png: Alur Pelaporan, Skoring AI & Penanganan
+  - design_system_roadasafe.png: Design System (palet, tipografi, prinsip visual)
+
+CATATAN KESESUAIAN MOCKUP DENGAN SRS
+------------------------------------
+Beberapa hal di mockup berbeda dari SRS v1.1 dan sebaiknya diselaraskan sebelum dokumen final:
+  1. Ambang urgensi. Legenda dashboard web memakai Tinggi >70, Sedang 40-70, Rendah <40,
+     sedangkan SRS memakai High 66,01-100, Medium 33,01-66, Low 0-33. Skor 54.2 dan 48.0 tetap
+     Sedang di keduanya, tetapi skor 67-70 atau 33-40 akan berbeda kategorinya.
+  2. Istilah status dan kategori. Mockup memakai "Dalam Penanganan", "Selesai", dan label
+     Tinggi/Sedang/Rendah; SRS memakai "Dalam Perbaikan", "Sudah Diperbaiki", dan
+     High/Medium/Low. Mockup juga belum menampilkan status "Ditolak" pada contoh baris.
+  3. Platform mobile. SRS menyebut web responsif / PWA dan menyatakan aplikasi native di luar
+     lingkup. Mockup mobile tampak seperti aplikasi tersendiri dengan tiga tab. Perlu
+     dipastikan apakah mobile dibangun sebagai PWA.
+  4. Data contoh. Mockup masih memakai data sampel (tanggal "24 Okt 2024" dan banner "Peta API
+     belum tersedia. Menampilkan sampel lokal."), jadi angka statistik belum berasal dari sistem
+     nyata.
+  5. Kartu detail mobile memuat tipe kerusakan ("Lubang Dalam (Pothole)") dan status
+     "Menunggu Sinyal" yang belum dijelaskan di SRS; sebaiknya ditambahkan ke kebutuhan
+     fungsional bila dipertahankan.
+  6. Deduplikasi di dashboard tertulis radius 15 meter, sedangkan SRS menyebut 10-15 meter.

@@ -1,0 +1,72 @@
+HEAL  [UI/UX]
+================================================================================================
+Aplikasi diet dan gizi berbasis AI dengan Proof-of-Progress blockchain: Live Smart and Stay
+True.
+
+RINGKASAN PROJECT
+-----------------
+HEAL (Holistic Ecosystem for AI-Driven Living) adalah prototipe aplikasi mobile untuk kompetisi
+UI/UX FSTIVAL 1.0 bertema "Beyond Design: Innovate. Impact. Inspire". AI berperan sebagai
+Cognitive Food Analyst yang mendeteksi gizi makanan dari foto, sedangkan blockchain menjamin
+bukti kemajuan (Proof-of-Progress) dan sistem reward tidak dapat dimanipulasi.
+
+LATAR BELAKANG & MASALAH
+------------------------
+Survei Kesehatan Indonesia 2023 mencatat obesitas sentral pada dewasa mendekati 36,8%, dan 16,2%
+remaja usia 13 sampai 15 tahun mengalami gizi lebih atau obesitas. Survei Jakpat (Mei 2023)
+menunjukkan 63% responden gagal diet karena sulit menghindari makanan kesukaan, 54% karena rasa
+lapar, dan 22% karena tidak punya sistem dukungan.
+
+TUJUAN
+------
+  - Mengembangkan solusi kesehatan digital berbasis lokal untuk mengatasi obesitas lintas usia.
+  - Menciptakan antarmuka human-centered dan inklusif, termasuk UI ramah lansia.
+  - Mendorong konsistensi perilaku sehat lewat Proof-of-Progress yang transparan.
+  - Mengotomatisasi pelacakan gizi dari foto makanan.
+  - Menghasilkan prototipe interaktif di Figma.
+
+FITUR UTAMA
+-----------
+  - Adaptive onboarding: tujuan, berat badan, dan frekuensi aktivitas fisik menyesuaikan UI dan
+    kalibrasi algoritma.
+  - AI Food Scanning: foto makanan menghasilkan kalori, protein, lemak, karbohidrat, dan
+    Nutrition Guidance tanpa pencatatan manual.
+  - Proof-of-Progress dan goal tracking: kemajuan dicatat permanen di blockchain dan persentase
+    target tampil real-time.
+  - Reward claiming: bintang atau poin diperoleh setelah konsistensi (misalnya 70% atau 3 day
+    streak) dan dapat ditukar hadiah.
+  - Edukasi gizi holistik berupa ringkasan nutrisi harian dan rekomendasi gaya hidup personal.
+
+KEY RESOURCE
+------------
+  - Tim (Trio Ubur-Ubur): Hizkia Dustin Sitepu, Eki Shinta Maharani, Siti Nayla Alikha Nisrina
+    (IPB University, 2025)
+  - Konteks: Kompetisi UI/UX FSTIVAL 1.0
+  - Target pengguna: Remaja dan pelajar (13 sampai 21 tahun), dewasa produktif (22 sampai 55
+    tahun), dan lansia (55+)
+  - Teknologi konsep: AI food detection dan blockchain untuk Proof-of-Progress
+  - Dokumen: Proposal, user flow, dan mockup high-fidelity
+  - Tools: Figma dan Figma Board (user flow)
+
+ALUR SINGKAT
+------------
+Pengguna menjalani onboarding adaptif, memotret makanan lewat tombol Scanning atau Add Food,
+menerima ringkasan gizi dari AI, lalu data dicatat ke log dan dikirim anonim ke blockchain.
+Progres dipantau dan reward dapat diklaim ketika target konsistensi tercapai.
+
+DESIGN SYSTEM (RINGKAS)
+-----------------------
+Palet didominasi hijau dengan komposisi 60/30/10 karena dikaitkan dengan ketenangan dan
+pemulihan mental. Tipografi memakai Poppins, elemen grafis berupa pohon dan alam yang
+melambangkan pertumbuhan, serta maskot AI berwarna oranye yang ramah.
+Palet: Green 60% #387C38, Lime 30% #BCDC74, White 10% #FFFFFF, Mascot Orange #F3A054, Leaf
+#76AB5E, Cream #F3F2EC, Ink #21282E
+Font: Poppins
+
+DIAGRAM
+-------
+  - diagram_user_flow.png: User Flow HEAL
+
+TAUTAN FIGMA
+------------
+https://www.figma.com/design/083INmHuGULxqOXaF6RzQG/LOMBA-UI-UX-FSTIVAL-1.0?m=auto&t=UX0xlSJ8Msib0BMB-6

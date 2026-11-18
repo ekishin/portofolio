@@ -1,0 +1,70 @@
+TECHNOPLAY  [Mobile]
+================================================================================================
+Aplikasi AR berbasis marker dari buku fisik dengan tiga challenge pembelajaran interaktif.
+
+RINGKASAN PROJECT
+-----------------
+TechnoPlay adalah aplikasi mobile Augmented Reality pembelajaran untuk mata kuliah Teknologi
+Virtual. Proyek dikerjakan tim 3 orang dalam 4 minggu dan menghasilkan satu aplikasi AR berbasis
+marker yang memuat tiga challenge. Fokusnya adalah aplikasi yang stabil untuk demo dan jelas
+secara pembelajaran, bukan aplikasi dengan fitur lengkap.
+
+LATAR BELAKANG & MASALAH
+------------------------
+Materi komposisi visual dan animasi dasar sulit dipahami hanya dari teks buku. Marker pada buku
+fisik yang dipindai lewat kamera menghadirkan objek 3D sehingga konsep dapat dilihat dan dicoba
+langsung.
+
+TUJUAN
+------
+  - Menyajikan tiga materi pembelajaran lewat challenge interaktif berbasis AR.
+  - Menjaga ruang lingkup proyek tetap realistis dalam 4 minggu dengan batasan fitur, aset,
+    interaksi, dan marker yang jelas.
+
+FITUR UTAMA
+-----------
+  - Challenge 1 (Storyboard): pengguna menyusun urutan scene dari naskah skenario dengan
+    memindai marker AR sesuai alur cerita.
+  - Challenge 2 (Material Desain): memahami lapisan Background, Middle Ground, dan Foreground,
+    lalu melihat gabungan ketiganya.
+  - Challenge 3 (Animasi Dasar): membandingkan animasi yang sama pada 24, 30, dan 60 fps.
+  - Splash screen, menu utama (Mulai Belajar, Tentang Aplikasi, Keluar), dan menu pemilihan
+    challenge.
+  - Overlay instruksi dan hint, feedback visual saat marker terdeteksi, serta pesan fallback
+    bila marker gagal terbaca.
+  - Panel ringkasan materi di akhir tiap challenge.
+
+KEY RESOURCE
+------------
+  - Tim: 3 orang, durasi proyek 4 minggu
+  - Konteks: Mata kuliah Teknologi Virtual (aplikasi AR pembelajaran)
+  - Engine dan AR: Unity (output APK) dan Vuforia untuk marker-based AR
+  - Aset: Model 3D dan animasi untuk setiap challenge; marker dirancang di Canva dan bersumber
+    dari buku fisik
+  - Pengelolaan lingkup: Fitur dibekukan setelah minggu ke-2; minggu 3 sampai 4 untuk integrasi,
+    testing, polish, dan bug fixing
+  - Tools: Figma (desain UI)
+
+ALUR SINGKAT
+------------
+Splash screen, menu utama, memilih challenge, membaca instruksi, memindai marker dengan kamera
+AR, berinteraksi dan menerima feedback, lalu melihat panel ringkasan untuk kembali ke menu atau
+lanjut ke challenge berikutnya.
+
+DESIGN SYSTEM (RINGKAS)
+-----------------------
+Antarmuka bertema visual futuristik yang selaras dengan materi Teknologi Virtual. Kartu
+challenge berwarna pastel dengan gaya jendela retro dipadukan ilustrasi karakter bernuansa ungu
+dan biru.
+Palet: Royal Blue #376DE8, Lavender #DBCAF9, Butter #E8E499, Pink Card #F0B8EE, Navy #435C90,
+Mauve #9E8CA4, Night #171719
+Font: PressStart2P
+
+DIAGRAM
+-------
+  - diagram_flow_aplikasi_ar.png: Flow Aplikasi AR TechnoPlay
+  - diagram_timeline_4_minggu.png: Timeline Pengembangan 4 Minggu
+
+TAUTAN FIGMA
+------------
+https://www.figma.com/design/hSWilCp383y6BuYpga3iDX/Design?m=auto&t=UX0xlSJ8Msib0BMB-6

@@ -1,0 +1,68 @@
+OASIS  [UI/UX]
+================================================================================================
+Aplikasi mobile untuk berhenti merokok secara bertanggung jawab dengan prinsip Green Lifestyle
+(SDG 12).
+
+RINGKASAN PROJECT
+-----------------
+Oasis adalah rancangan aplikasi mobile yang membantu perokok berhenti sekaligus menumbuhkan
+kesadaran akan dampak lingkungan dari konsumsi tembakau. Perancangan memakai pendekatan UI/UX
+yang edukatif, empatik, dan berkelanjutan, berlandaskan SDG 12 serta terkait SDG 3, 14, dan 15.
+
+LATAR BELAKANG & MASALAH
+------------------------
+Indonesia berada di peringkat ketiga dunia dalam jumlah perokok (sekitar 70 juta perokok aktif),
+dan 34,5% orang dewasa adalah pengguna tembakau (GATS 2021). Perokok muda usia 10 sampai 18
+tahun mencapai sekitar 7,4%. Produksi tembakau dan limbah puntung rokok juga menimbulkan
+deforestasi, degradasi tanah, emisi gas rumah kaca, dan polusi plastik.
+
+TUJUAN
+------
+  - Merancang UI yang memvisualisasikan dampak, misalnya pengurangan limbah dan jejak karbon.
+  - Menciptakan UX yang mendorong perubahan perilaku secara empatik, interaktif, dan berbasis
+    komunitas.
+  - Mengintegrasikan prinsip keberlanjutan pada elemen visual, narasi, dan fitur.
+
+FITUR UTAMA
+-----------
+  - Autentikasi pengguna (sign up dan sign in).
+  - Dashboard/Home: lama berhenti merokok (streak), tantangan berjalan, dan statistik
+    pencapaian.
+  - Challenge system: target harian atau mingguan dengan lencana pencapaian.
+  - Community page: ruang berbagi pengalaman dan saling mendukung.
+  - User profile: rokok yang berhasil dihindari, estimasi penghematan finansial, dan dampak
+    lingkungan.
+  - Support system: pesan motivasi, aktivitas pengalih, dan akses komunitas saat craving datang.
+  - Settings: preferensi tampilan, notifikasi, akun, dan privasi.
+
+KEY RESOURCE
+------------
+  - Tim (MahmutBe): Eki Shinta Maharani, Husnul Khotimah, Salsabila, Siti Nayla Alikha Nisrina
+    (IPB University, 2025)
+  - Riset: Wawancara mendalam dengan 10 responden usia 19 sampai 21 tahun, observasi
+    kontekstual, dan analisis tematik
+  - Persona: Arya Ojan Wiguna, 21 tahun, mahasiswa tingkat akhir dengan kesiapan berhenti 9/10
+  - Dokumen: User flow, wireframe low-fidelity, mockup high-fidelity, dan prototipe interaktif
+  - Tools: Figma
+
+ALUR SINGKAT
+------------
+Pengguna mendaftar atau masuk, melihat dashboard progres dan streak, mengikuti challenge,
+bergabung ke komunitas, memantau dampak di profil, serta memakai fitur dukungan saat craving.
+
+DESIGN SYSTEM (RINGKAS)
+-----------------------
+Palet dan ilustrasi sengaja menjauhi nuansa yang identik dengan merek rokok, dan visual bumi
+dengan elemen lingkungan memperkuat pesan keberlanjutan. Deskripsi ilustrasi bersifat
+informatif, bukan ajakan.
+Palet: Ocean Blue #2588BD, Sky #65ABCB, Fresh Green #64C068, Mint #ADCEC5, Forest #38432A, Stone
+#8A8A87, Snow #F8F9F9
+Font: Poppins
+
+DIAGRAM
+-------
+  - diagram_user_flow.png: User Flow Aplikasi Oasis
+
+TAUTAN FIGMA
+------------
+https://www.figma.com/design/psyfcAv6IwlPSlmduCAbly/Oasis?m=auto&t=UX0xlSJ8Msib0BMB-6

@@ -1,26 +1,86 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fafafa;
+  --foreground: #18181b;
+  --surface: #ffffff;
+  --footer: #f4f4f5;
+  --muted: #71717a;
+  --border: #e4e4e7;
+  --accent: #18181b;
+  /* Type scale — one system across pages */
+  --font-weight-heading: 600;
+  --font-weight-body: 400;
+  --font-weight-label: 500;
+  --tracking-heading: -0.025em;
+  --tracking-eyebrow: 0.16em;
+  /* Fluid width: no hard 1152/1440 cap — only side gutters. */
+  --page-px: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --page-px: 1.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --page-px: clamp(2rem, 4vw, 4rem);
+  }
+}
+
+.page-width {
+  width: 100%;
+  max-width: none;
+  margin-inline: auto;
+  padding-inline: var(--page-px);
+  box-sizing: border-box;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-plus-jakarta);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif;
+  font-weight: var(--font-weight-body);
+  letter-spacing: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: inherit;
+  font-weight: var(--font-weight-heading);
+  letter-spacing: var(--tracking-heading);
+}
+
+@keyframes splash-logo-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.06);
+    opacity: 0.72;
+  }
+}
+
+.splash-logo-pulse {
+  animation: splash-logo-pulse 1.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash-logo-pulse {
+    animation: none;
+  }
 }

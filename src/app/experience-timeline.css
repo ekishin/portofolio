@@ -1,0 +1,11 @@
+/* Experience timeline — opacity/transform only (no transition: all). */
+
+.exp-timeline__track-fill {
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .exp-timeline__track-fill {
+    transform: none !important;
+  }
+}

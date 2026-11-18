@@ -1,0 +1,75 @@
+FAMSPAY  [Web & Mobile]
+================================================================================================
+Aplikasi manajemen keuangan keluarga berbasis web dan Android dengan satu grup keluarga tanpa
+dompet bersama.
+
+RINGKASAN PROJECT
+-----------------
+FamsPay adalah aplikasi pengelolaan keuangan keluarga dengan konsep satu grup keluarga tanpa
+dompet bersama. Setiap anggota memiliki dompet virtual dan target tabungan pribadi yang bersifat
+privat, sedangkan admin keluarga mengatur limit pengeluaran bulanan dan melihat data agregat.
+Proyek ini adalah PJBL gabungan mata kuliah Pemrograman Web, Pemrograman Mobile, dan Komputasi
+Awan, serta dipublikasikan dalam format jurnal.
+
+LATAR BELAKANG & MASALAH
+------------------------
+Banyak aplikasi keuangan keluarga mengabaikan privasi finansial antaranggota atau memakai konsep
+dompet bersama yang kurang sesuai dengan kondisi rumah tangga.
+
+TUJUAN
+------
+  - Menyediakan transparansi pengeluaran keluarga tanpa mengorbankan privasi tiap anggota.
+  - Mendukung pencatatan transaksi, pengaturan limit, dan tabungan pribadi di web maupun mobile.
+
+FITUR UTAMA
+-----------
+  - Autentikasi: login, register, login Google, dan alur lupa password (email, buat password
+    baru).
+  - Manajemen keluarga: membuat grup (menghasilkan join_code) atau bergabung dengan kode; satu
+    pengguna hanya boleh berada di satu keluarga.
+  - Peran Admin dan Member dengan permission matrix: Member melihat transaksi pribadinya, Admin
+    melihat dashboard agregat keluarga.
+  - Pengaturan batas pengeluaran bulanan dengan progress bar pemakaian limit dan tombol Ubah
+    Limit.
+  - Dompet personal dan pencatatan transaksi dengan validasi nominal dan peringatan saat saldo
+    atau sisa limit menipis.
+  - Target tabungan pribadi (goals) yang privat dan tercatat sebagai transaksi pengeluaran
+    kategori Savings.
+  - Dashboard personal dan keluarga: Money Flow, budget, dan transaksi terbaru.
+
+KEY RESOURCE
+------------
+  - Tim (Kelompok 10): Afif Aulia Rahman, Dwina Sarah Diva, Siti Nayla Alikha Nisrina, Eki
+    Shinta Maharani
+  - Konteks: PJBL gabungan Pemrograman Web, Pemrograman Mobile, dan Komputasi Awan (TRPL, IPB
+    University)
+  - Metode: Agile SDLC dengan 3 Sprint dan prinsip Scrum; prototyping
+  - Backend: Laravel (RESTful API) dan MongoDB dengan cached fields wallet_balance dan
+    remaining_limit
+  - Frontend: Web: Laravel Blade + Tailwind; Mobile: Android Native (Java)
+  - Pengujian: Black Box Testing dengan Equivalence Partitioning
+  - Tools: Figma (laporan UI/UX high-fidelity)
+
+ALUR SINGKAT
+------------
+Pengguna melewati onboarding empat layar, memilih masuk atau daftar, lalu membuat atau bergabung
+ke grup keluarga. Admin mengatur limit bulanan, sementara member mencatat transaksi dan membuat
+goals privat.
+
+DESIGN SYSTEM (RINGKAS)
+-----------------------
+Design system FamsPay terdokumentasi lengkap: warna brand hijau emerald #10B981 dengan skala 10
+tingkat, empat warna semantic, dan tipografi Inter dengan 10 tingkat gaya teks. Layout bersih
+dengan white space banyak dan tombol berada di thumb zone.
+Palet: Emerald 500 #10B981, Emerald 50 #ECFDF5, Emerald 300 #6EE7B7, Emerald 700 #047857,
+Emerald 900 #064E3B, Ink #111827, White #FFFFFF
+Font: Inter
+
+DIAGRAM
+-------
+  - diagram_arsitektur_sistem.png: Arsitektur Sistem FamsPay
+  - diagram_alur_grup_keluarga.png: Alur Pengguna & Grup Keluarga
+
+TAUTAN FIGMA
+------------
+https://www.figma.com/design/iXfQdT89Qvtr5L31pkqNIS/User-Interface?m=auto&t=UX0xlSJ8Msib0BMB-6

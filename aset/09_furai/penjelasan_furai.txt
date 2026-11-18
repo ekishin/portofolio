@@ -1,0 +1,115 @@
+FURAI (STUDY BUDDY)  [WEB APP DETEKSI POSTUR BELAJAR]
+================================================================================================
+Web app pengingat postur duduk untuk pelajar dan mahasiswa yang mendeteksi bungkuk lewat webcam
+langsung di browser, tanpa mengirim video ke server.
+
+RINGKASAN PROJECT
+-----------------
+Furai (nama kerja di SRS: Study Buddy) adalah web app yang mendeteksi postur duduk pelajar dan
+mahasiswa saat belajar, lalu memberi peringatan ketika pengguna bungkuk. Tagline di halaman
+utama: "A study buddy that catches you curling up like fried shrimp, right in your browser" dan
+"猫背、バレてるよ。" (bungkukmu ketahuan). Seluruh pemrosesan kamera berjalan di perangkat
+pengguna. Aplikasi memiliki satu aktor manusia, yaitu Pengguna, yang dapat memakai aplikasi
+sebagai tamu (tanpa akun) atau sebagai pengguna terdaftar (login). Tidak ada peran admin.
+SRS disusun untuk konteks lomba, revisi 2 (1 November 2026), dan memetakan produk ke SDG 3
+(Kesehatan dan Kesejahteraan) serta SDG 4 (Pendidikan Berkualitas).
+
+LATAR BELAKANG & MASALAH
+------------------------
+Pelajar dan mahasiswa menghabiskan waktu belajar berjam-jam di depan laptop dengan kepala
+condong ke depan (tech-neck). Kebiasaan ini sering tidak disadari, dan belum ada alat yang
+gratis, ringan, dan menjaga privasi untuk mengingatkan secara real-time.
+
+TUJUAN
+------
+  - Mendeteksi postur bungkuk secara real-time dari webcam memakai model pose MediaPipe di
+    browser, dengan aturan penilaian berbasis kalibrasi dari 02_deteksi_bungkuk.py.
+  - Mengubah peringatan menjadi kebiasaan sehat lewat sesi belajar terstruktur, stretch break,
+    riwayat postur, dan gamifikasi ringan.
+  - Menjaga akses tetap inklusif: berjalan di laptop spesifikasi rendah, dapat dipakai tanpa
+    akun (mode tamu), dan tanpa biaya.
+  - Menyediakan akun opsional agar ringkasan sesi dan streak tersimpan lintas perangkat, tanpa
+    pernah mengirim video, gambar, atau koordinat tubuh ke server.
+
+FITUR UTAMA
+-----------
+  - Izin kamera dan privasi (FR-01, FR-02): penjelasan privasi sebelum kamera aktif; landmark
+    tubuh diekstrak sepenuhnya di browser, dan tidak ada request jaringan yang membawa gambar.
+  - Kalibrasi dan klasifikasi (FR-03, FR-04, FR-06): pengguna duduk tegak 5 detik untuk membentuk
+    baseline. Status: tegak, bungkuk, atau tidak terdeteksi. Bungkuk bila jarak telinga-bahu di
+    bawah 93 persen baseline atau lebar bahu di atas 108 persen baseline, dengan voting 10
+    frame terakhir. Pengguna keluar frame menjeda timer dan tidak dihitung bungkuk.
+  - Peringatan (FR-07, FR-08): banner visual dan suara lembut yang dapat dimatikan, muncul bila
+    bungkuk terus-menerus lebih dari 3 detik, dengan jeda minimum antar peringatan dan bahasa
+    yang suportif.
+  - Sesi belajar (FR-09 sampai FR-11): timer Pomodoro (nilai awal 25 menit fokus dan 5 menit
+    istirahat), kontrol mulai, jeda, lanjut, akhiri, dan stretch break terpandu minimal tiga
+    gerakan dengan ilustrasi dan hitung mundur.
+  - Analitik (FR-14, FR-15): ringkasan sesi berisi skor postur sehat, jumlah teguran, dan
+    durasi, serta grafik status postur per interval (Chart.js) untuk menemukan menit rawan.
+  - Akun (FR-26 sampai FR-29): registrasi dan login dengan email dan password, sinkronisasi
+    ringkasan sesi, dan hapus akun beserta data server. Mode tamu tetap berfungsi penuh.
+  - Pengaturan dan data lokal (FR-20, FR-24): durasi Pomodoro, suara, dan peringatan tersimpan
+    lokal; satu tombol menghapus seluruh data lokal.
+  - Rilis 2 (Should): sensitivitas deteksi, istirahat adaptif, riwayat dan tren 7 hari, tanaman
+    virtual dan streak, mode ringan, mode tanpa kamera, PWA offline, sinkronisasi sesi,
+    konfigurasi dari server.
+  - Stretch goal (Could): validasi stretch lewat kamera, ekspor laporan, suara latar, kuesioner
+    validasi anonim.
+  - Halaman utama (dari screenshot): ticker pesan, navbar (About, How it works, Features,
+    Privacy, Study Space), hero "posture reveal" dengan ilustrasi udang goreng di meja belajar,
+    badge "試す / TRY IT NOW", tombol "Furai とは?", dan kartu postur SLOUCH (猫背) dan SIT TALL
+    (ピン).
+
+KEY RESOURCE
+------------
+  - Konteks: Web app deteksi postur belajar untuk kompetisi (SDG 3 dan SDG 4); SRS Study Buddy
+    revisi 2 oleh @ekishinta, 1 November 2026; nama produk di frontend adalah Furai
+  - Dokumen: SRS (31 FR dalam 8 modul, 19 NFR, ERD lokal dan server, use case, activity
+    diagram, 31 user story, sprint backlog, dan kontrak API v0.1)
+  - Tools / teknologi: Next.js dan React (frontend, Vercel), MediaPipe Pose, Chart.js,
+    IndexedDB dan localStorage, Service Worker (PWA), FastAPI dengan Pydantic, SQLite
+    (pengembangan), autentikasi hash password dan token berumur terbatas
+  - Pengguna: Pengguna (tamu atau terdaftar); komponen pendukung: browser dan perangkat, model
+    pose MediaPipe, backend FastAPI
+
+ALUR SINGKAT
+------------
+Pengguna membuka Furai dan menekan Mulai sesi. Sistem meminta izin kamera; bila ditolak, pengguna
+ditawari mode tanpa kamera (pengingat berbasis waktu, rilis 2). Bila disetujui, pengguna
+kalibrasi duduk tegak selama 5 detik dan baseline disimpan lokal. Timer fokus berjalan sambil
+loop deteksi mengambil frame, menghasilkan landmark, menilai status postur, dan mencatat sampel
+per interval. Bila bungkuk bertahan lebih dari 3 detik, muncul peringatan visual dan suara
+lembut. Saat timer fokus selesai, pengguna mengikuti stretch break lalu memilih lanjut belajar
+atau mengakhiri sesi. Saat sesi berakhir, sistem menghitung skor postur, menyimpan sesi secara
+lokal, dan menampilkan ringkasan serta grafik. Jika pengguna login, ringkasan sesi dikirim ke
+backend lewat HTTPS; bila gagal, sesi tetap lokal dan dikirim ulang nanti tanpa menggandakan
+sesi.
+
+DESIGN SYSTEM (RINGKAS)
+-----------------------
+Tampilan bergaya playful dengan tepi Ink yang tegas: hero berlatar Indigo penuh dengan kartu
+putih berpojok besar, section berikutnya berlatar Cream berpola grid, kartu sedikit miring, dan
+ilustrasi udang goreng sebagai maskot postur bungkuk. Teks dwibahasa Inggris dan Jepang, termasuk
+teks vertikal. Kuning dipakai untuk aksen dan status bungkuk, Mint untuk postur tegak, Oranye
+untuk ticker dan ilustrasi. Nada pesan suportif dan tidak menyalahkan (NFR-12); peringatan tidak
+hanya mengandalkan warna atau suara (NFR-08).
+Palet (nilai diambil dari piksel screenshot): Indigo #303CA3, Ebi Orange #F28A52, Shrimp Deep
+#DE723D, Sunny Yellow #FFE04A, Mint #5CC9A0, Cream #F1F0EB, Ink #161616, White #FFFFFF
+Font: gothic sans tebal untuk judul dan gothic Black untuk teks Jepang (jenis pastinya
+diperkirakan dari screenshot; contoh dirender dengan Noto Sans JP)
+
+CATATAN DARI SRS (HAL YANG MASIH TERBUKA)
+-----------------------------------------
+  - Durasi kalibrasi berbeda: script dan SRS memakai 5 detik, antarmuka saat ini menampilkan
+    10 detik; tim perlu memilih satu angka (disimpan di konfigurasi, FR-30).
+  - Tampilan sesi di frontend saat ini belum memakai deteksi nyata: angka sudut (misalnya
+    "58 derajat") dan tombol Simulate Test hanya bawaan antarmuka.
+  - Algoritma 02_deteksi_bungkuk.py (Python dan OpenCV) akan dipindahkan ke JavaScript; perlu
+    persetujuan tim ML dan FE serta uji kesetaraan pada rekaman landmark yang sama.
+  - Verifikasi email, reset password lewat email, dan login sosial tidak dikerjakan pada versi
+    lomba. Tanggal dan kapasitas sprint belum diisi di SRS.
+
+DIAGRAM
+-------
+  - diagram_alur_furai.png: Alur Sesi Belajar & Peringatan Postur

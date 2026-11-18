@@ -1,0 +1,99 @@
+BOYSAN MULTIMEDIA  [WEBSITE COMPANY PROFILE]
+================================================================================================
+Website resmi perusahaan event organizer, multimedia, dan entertainment yang menampilkan profil,
+layanan, dan portofolio, menerima pemesanan layanan lewat formulir dan WhatsApp, serta dilengkapi
+panel admin (CMS) untuk mengelola seluruh konten.
+
+RINGKASAN PROJECT
+-----------------
+Boysan Multimedia adalah perusahaan event organizer, multimedia, dan entertainment yang
+menghadirkan acara kreatif, profesional, dan berkesan. Website ini dirancang sebagai company
+profile publik dengan tagline "Merangkai Momen, Mencipta Kenangan". Aplikasi memiliki tiga
+aktor: Pengunjung (pengguna umum tanpa login), Klien (pengguna yang pernah memakai jasa dan
+dapat mengirim feedback), dan Admin (staf internal yang login untuk mengelola konten). Satu
+integrasi eksternal dipakai, yaitu WhatsApp. Dokumen dirancang oleh tim "Tahu Bulat" (Kelompok
+6 B2), Teknologi Rekayasa Perangkat Lunak, Sekolah Vokasi IPB.
+
+LATAR BELAKANG & MASALAH
+------------------------
+Perusahaan event organizer membutuhkan etalase online resmi agar calon klien dapat mengenal
+profil, layanan, dan portofolio, lalu langsung memesan atau berkonsultasi. Di sisi internal,
+staf non-teknis perlu mengubah konten website sendiri tanpa bantuan developer, dan perlu satu
+tempat untuk mencatat pemesanan serta masukan klien. (Disimpulkan dari ruang lingkup SRS;
+dokumen tidak memuat bagian latar belakang secara eksplisit.)
+
+TUJUAN
+------
+  - Menampilkan profil, layanan, portofolio, berita, testimoni, FAQ, media partner, dan
+    kontak perusahaan dalam satu website.
+  - Mempermudah calon klien memesan layanan: data tersimpan di database, lalu diarahkan ke
+    WhatsApp perusahaan.
+  - Mengumpulkan feedback klien yang dimoderasi admin sebelum dipakai.
+  - Memberi admin dashboard dan CMS agar konten dan data dapat dikelola tanpa keahlian teknis.
+
+FITUR UTAMA
+-----------
+  - Halaman publik (tanpa login): Beranda, Tentang, Layanan, Portofolio. Beranda berisi Hero,
+    ringkasan Tentang, Layanan Kami, Klien Kami, Portofolio, Media Partner, Berita, Testimoni,
+    FAQ, dan Hubungi Kami (kontak + formulir feedback).
+  - Halaman Tentang: deskripsi perusahaan, Visi, Misi (4 poin), dan "Kenapa pilih kami?" yang
+    berisi 5 keunggulan: Profesional, Kreatif, Modern, Terhubung, Lengkap.
+  - Layanan: Event Organizer, Multimedia, Entertainment, Crew, Technical Support, masing-masing
+    dengan tombol "Pesan Sekarang".
+  - Pemesanan layanan: formulir (nama, email, telepon, instansi opsional, layanan, tanggal acara,
+    detail permintaan, lampiran opsional, perkiraan budget). Data disimpan ke database sebelum
+    redirect ke WhatsApp; bila redirect gagal, pesanan tetap tersimpan.
+  - Tombol WhatsApp melayang di semua halaman, juga dipakai untuk konsultasi, bertanya FAQ, dan
+    pesan template otomatis.
+  - Feedback klien: nama, instansi, email, rating 1-5, dan pesan; email divalidasi, lalu admin
+    menyetujui, menolak, atau menghapus.
+  - Panel admin: login username dan password; dashboard (Total Pemesanan, Rating, Antrian,
+    aktivitas terbaru); CMS untuk Hero, Media Partner, Berita, FAQ, Kontak, Tentang, Layanan,
+    Portofolio, Klien Kami, dan Testimoni; menu Data & Interaksi untuk Pemesanan dan Feedback.
+  - Aturan penting: hapus konten wajib konfirmasi, password admin di-hash, rating bilangan bulat
+    1-5, konten tampil sesuai urutan, ukuran media dijaga agar tidak melebihi kuota hosting.
+
+KEY RESOURCE
+------------
+  - Konteks: Website company profile Boysan Multimedia; SRS direkonstruksi dari DPPL Kelompok
+    6 B2 (86 halaman), status draft
+  - Dokumen: SRS (srs_boysan.md): kebutuhan fungsional FR-01 s.d. FR-38, aturan bisnis BR-01
+    s.d. BR-11, kebutuhan data, kebutuhan non-fungsional NFR-01 s.d. NFR-10, serta temuan
+    ketidakkonsistenan
+  - Tools / teknologi: PHP (Laravel), tampilan HTML (Blade), MySQL atau PostgreSQL (belum
+    diputuskan), integrasi WhatsApp, arsitektur four-tier (Presentation, Business, Persistence,
+    Database), shared hosting (RAM 1-2 GB, penyimpanan 5-10 GB)
+  - Pengguna: Pengunjung, Klien, Admin, dan Sistem WhatsApp (eksternal)
+
+ALUR SINGKAT
+------------
+Pengunjung membuka website, memilih layanan, menekan "Pesan Sekarang", lalu mengisi formulir.
+Jika field wajib belum lengkap, sistem menampilkan pesan dan formulir diulang. Jika lengkap,
+data klien dan pesanan disimpan ke database, lalu pengguna diarahkan ke WhatsApp perusahaan.
+Jika redirect gagal, pesan error tampil dan pesanan tetap tersimpan. Admin login, melihat
+dashboard, lalu mengelola pemesanan (lihat detail, ubah status, unduh lampiran). Klien yang
+mengisi formulir feedback dengan lengkap dan email terdaftar akan masuk ke antrean moderasi
+admin.
+
+DESIGN SYSTEM (RINGKAS)
+-----------------------
+Antarmuka mengusung tema biru yang profesional dan modern: judul berwarna Navy, tombol dan kartu
+bergradien biru, latar section Ice Blue, dan footer gelap. Foto acara dengan overlay gelap
+dipakai pada hero dan header halaman. Kartu dan gambar berpojok membulat dengan bayangan
+lembut. Tampilan dirancang untuk desktop (responsivitas mobile belum diputuskan di SRS).
+Palet (nilai diambil dari piksel screenshot Tentang Kami): Navy #395886, Royal Blue #254491,
+Sky #69A0D6, Soft Blue #87ACDE, Ice #EFF6FF, Midnight #14275C, Ink #070708, WhatsApp Green
+#50CE56. Warna tautan menu aktif #60A5FA.
+Font: Poppins (diperkirakan dari screenshot)
+
+CATATAN DARI SRS (HAL YANG MASIH TERBUKA)
+-----------------------------------------
+  - Mekanisme WhatsApp belum ditetapkan: click-to-chat (wa.me) atau WhatsApp Business API.
+  - Status pemesanan dan feedback tidak konsisten antar-bagian DPPL; perlu satu state machine.
+  - Belum ada FR untuk tambah layanan, logout, reset password admin, pencarian, dan paginasi.
+  - Alur feedback menjadi testimoni belum jelas; skema data (ERD vs kamus data) belum seragam.
+  - Alamat, email, dan nomor kontak pada screenshot tampak sebagai data contoh.
+
+DIAGRAM
+-------
+  - diagram_alur_boysan.png: Alur Pemesanan Layanan & Feedback

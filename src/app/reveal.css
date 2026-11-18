@@ -1,0 +1,112 @@
+@keyframes floating {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes cursor-blink {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.floating {
+  animation: floating 4.5s ease-in-out infinite;
+}
+
+.floating-delay-1 {
+  animation-delay: 0.4s;
+}
+
+.floating-delay-2 {
+  animation-delay: 0.8s;
+}
+
+.floating-delay-3 {
+  animation-delay: 1.2s;
+}
+
+.animate-cursor {
+  animation: cursor-blink 1s step-end infinite;
+}
+
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.marquee-track {
+  animation: marquee-left 28s linear infinite;
+}
+
+.marquee-track.marquee-reverse {
+  animation-name: marquee-right;
+  animation-duration: 32s;
+}
+
+.marquee-logo {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 2.85rem;
+  height: 2.85rem;
+}
+
+.marquee-logo img {
+  display: block;
+  width: 2.6rem;
+  height: 2.6rem;
+  max-width: 2.6rem;
+  max-height: 2.6rem;
+  object-fit: contain;
+  object-position: center;
+  opacity: 0.55;
+  filter: grayscale(1);
+}
+
+@media (min-width: 768px) {
+  .marquee-logo {
+    width: 3.15rem;
+    height: 3.15rem;
+  }
+
+  .marquee-logo img {
+    width: 2.9rem;
+    height: 2.9rem;
+    max-width: 2.9rem;
+    max-height: 2.9rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating,
+  .animate-cursor,
+  .marquee-track {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

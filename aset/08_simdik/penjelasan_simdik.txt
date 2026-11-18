@@ -1,0 +1,72 @@
+SIMDIK  [Web]
+================================================================================================
+Sistem informasi manajemen tenaga pendidik untuk Yayasan Ihsan Tauhid Bogor.
+
+RINGKASAN PROJECT
+-----------------
+SIMDIK adalah sistem informasi berbasis web untuk mendigitalkan pendataan tenaga pendidik di
+Yayasan Ihsan Tauhid Bogor (Ciawi). Proyek ini dikerjakan bersama mitra nyata dan dituangkan
+dalam laporan hasil proyek setebal 90 halaman untuk mata kuliah Sistem Informasi.
+
+LATAR BELAKANG & MASALAH
+------------------------
+Pendataan delapan standar akademik untuk akreditasi masih manual: pendidik menyerahkan berkas
+fisik (ijazah, CV, SK, sertifikat), Tata Usaha memvalidasi dan memfotokopi, lalu berkas dikirim
+ke kantor pusat untuk diketik ulang. Akibatnya ada risiko arsip rusak atau hilang, riwayat
+pendidikan sulit dilacak, verifikasi lambat, dan status berkas tidak dapat dipantau pendidik.
+Data diperoleh dari wawancara dan observasi pada 16 Februari 2026.
+
+TUJUAN
+------
+  - Memusatkan identitas dan riwayat pendidikan tenaga pendidik dalam satu platform.
+  - Mengganti pengiriman berkas fisik dengan unggah dokumen digital.
+  - Mempercepat verifikasi dengan pemantauan status secara real-time.
+  - Menyediakan pelaporan dan ekspor profil dalam PDF maupun Excel untuk kebutuhan akreditasi.
+  - Memberi notifikasi otomatis atas data atau dokumen yang belum lengkap.
+
+FITUR UTAMA
+-----------
+  - Login Pendidik dan Admin/TU.
+  - Input identitas dan riwayat pendidikan yang tervalidasi.
+  - Unggah dan manajemen dokumen pendidik.
+  - Verifikasi dokumen oleh TU secara daring.
+  - Notifikasi otomatis kelengkapan berkas dan pemantauan status verifikasi.
+  - Manajemen data master pendidik (tambah, ubah, hapus, cari, filter).
+  - Dashboard statistik serta ekspor profil dan laporan PDF/Excel.
+
+KEY RESOURCE
+------------
+  - Tim (Kelompok 2): Fajar Ramadhan (Project Manager), Eki Shinta Maharani (System Analyst),
+    Ahmad Fauzi Hasbi Nasution (Frontend Developer), Farrel Muhammad Zaki (Backend Developer),
+    Siti Nayla Alikha Nisrina (UI/UX Designer)
+  - Mitra: Yayasan Ihsan Tauhid Bogor
+  - Metode: Waterfall
+  - Teknologi: PHP dengan Laravel (arsitektur MVC), tampilan React.js melalui Vite, basis data
+    MySQL
+  - Dokumen: Use case diagram, activity diagram pendidik dan admin/TU, ERD, lo-fi dan hi-fi
+  - Pengujian keamanan: OWASP ZAP
+  - Tools: Figma, GitHub
+
+ALUR SINGKAT
+------------
+Pendidik mengisi identitas dan riwayat pendidikan lalu mengunggah dokumen. TU memeriksa
+kesesuaian berkas, dan sistem mengirim notifikasi otomatis serta memperbarui status verifikasi.
+Data master dapat dicari, difilter, dan diekspor oleh TU atau pimpinan.
+
+DESIGN SYSTEM (RINGKAS)
+-----------------------
+Tampilan dashboard bergaya glassmorphism dengan latar teal lembut, kartu transparan, serta
+tombol aksi teal gelap. Hierarki informasi jelas: sapaan, status verifikasi, notifikasi terbaru,
+dan quick actions.
+Palet: Deep Teal #095068, Teal #266C83, Steel #4B8599, Mist #799EA9, Ice #D5E3E8, Frost #EAF1F4,
+Pending Yellow #F4D77A
+Font: PlusJakartaSans
+
+DIAGRAM
+-------
+  - diagram_alur_verifikasi_dokumen.png: Alur Verifikasi Dokumen Tenaga Pendidik
+  - diagram_arsitektur_mvc.png: Arsitektur MVC SIMDIK
+
+TAUTAN FIGMA
+------------
+https://www.figma.com/design/jfjIGH3IK0VIsXPpFiz28r/SI-Kelompok-2?m=auto&t=UX0xlSJ8Msib0BMB-6

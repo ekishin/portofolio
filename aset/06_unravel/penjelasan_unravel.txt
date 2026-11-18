@@ -1,0 +1,70 @@
+UNRAVEL  [Web]
+================================================================================================
+Platform e-scaffolding berbasis web untuk melatih problem solving mahasiswa lewat question
+chains.
+
+RINGKASAN PROJECT
+-----------------
+Unravel adalah platform web yang melatih kemampuan problem solving mahasiswa melalui studi kasus
+interaktif. Penyelesaian kasus dipecah ke empat pilar analisis terstruktur (Tujuan, Stakeholder,
+Masalah, Solusi) dengan strategi Web-Based Question Prompts dan Question Chains. Proyek
+dikerjakan untuk Pekan IT 2026, National IT Competition (NIC) kategori SoftDev.
+
+LATAR BELAKANG & MASALAH
+------------------------
+Mahasiswa pemula sering mengalami beban kognitif tinggi dan transformation error saat menghadapi
+masalah tidak terstruktur (ill-structured problems), sementara sistem e-learning masih seragam
+dan belum adaptif dalam memberi bantuan bertahap.
+
+TUJUAN
+------
+  - Menghasilkan platform e-scaffolding berbasis web yang fungsional sebagai alat bantu
+    kognitif.
+  - Mendesain UI/UX dengan pendekatan Question Prompts dan Question Chains.
+  - Mengimplementasikan input breakdown (Tujuan, Stakeholder, Problem, Solusi) untuk mengurai
+    kompleksitas masalah.
+  - Mengevaluasi efektivitas platform dalam menurunkan transformation error.
+
+FITUR UTAMA
+-----------
+  - Mode Belajar: kanvas logika dengan drag-and-drop blok jawaban ke empat pilar, validasi
+    jawaban, level yang terbuka bertahap, poin, rank, streak harian, dan leaderboard.
+  - Mode Diskusi: membuat dan menelusuri studi kasus (pencarian, filter topik, terbaru,
+    populer), mengisi lembar kerja analisis, memposting Public atau Private, serta like up, like
+    down, reply, dan bookmark.
+  - Identitas Public atau Anonim yang diterapkan otomatis pada respons.
+  - Profil, notifikasi (reply, like, streak harian), dan pengaturan akun.
+  - Landing page dengan dua pilihan mode, testimoni, FAQ, dan animasi Lottie buatan tim.
+  - Onboarding untuk aplikasi dan khusus Mode Belajar.
+
+KEY RESOURCE
+------------
+  - Tim: Husnul Khotimah (Scrum Master), Fadhil Ramadhan Afiansyah, Salsabila, Siti Nayla Alikha
+    Nisrina, Eki Shinta Maharani (Developer Team)
+  - Konteks: Pekan IT 2026, National IT Competition (NIC) SoftDev, IPB University
+  - Metode: Agile Scrum dengan Sprint 2 minggu (Planning, Daily Scrum, Review, Retrospective)
+  - Frontend: Next.js
+  - Backend: Go (Golang)
+  - Basis data: PostgreSQL
+  - Desain dan animasi: Figma, Adobe After Effects (aset Lottie)
+  - Version control: GitHub (repositori frontend dan backend); deployment di Vercel
+
+ALUR SINGKAT
+------------
+Pengguna login atau mendaftar, melewati onboarding, lalu masuk landing page yang bercabang ke
+Notifikasi, Profil, Mode Diskusi, Mode Belajar, dan Pengaturan. Di Mode Belajar pengguna
+menyusun jawaban pada kanvas logika, mengunci jawaban untuk divalidasi, lalu membuka level
+berikutnya.
+
+DESIGN SYSTEM (RINGKAS)
+-----------------------
+Gaya neo-brutalism yang playful: latar krem, outline hitam tegas dengan bayangan solid, tombol
+hijau mint, serta kartu pastel (pink, mint, biru, kuning). Heading memakai grotesk tebal dan
+teks isi memakai monospace.
+Palet: Mint Green #20C98E, Ink #111111, Cream #FDFBF4, Butter Yellow #FFE27A, Blush Pink
+#FBD3DA, Mint Tint #CFF5E3, Sky Tint #D5E3FB
+Font: SpaceGrotesk
+
+DIAGRAM
+-------
+  - diagram_user_flow.png: User Flow Website Unravel

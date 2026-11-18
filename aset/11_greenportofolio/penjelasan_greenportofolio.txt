@@ -1,0 +1,71 @@
+GREEN PORTFOLIO RISK DASHBOARD  [Data Analyst]
+================================================================================================
+Dashboard analisis dampak karhutla terhadap kerugian ekonomi dan kinerja saham sektoral di IHSG.
+
+RINGKASAN PROJECT
+-----------------
+Green Portfolio Risk & Climate Disclosure adalah dashboard interaktif di Microsoft Excel untuk
+Smart Data Analytics Competition (SDAC) 2026 bidang Akuntansi Keberlanjutan. Dashboard
+menghubungkan luas karhutla, estimasi kerugian ekonomi, dan return saham emiten sampel di IDX,
+dilengkapi kalkulator simulasi Green Portfolio Risk Score.
+
+LATAR BELAKANG & MASALAH
+------------------------
+Risiko iklim dan karhutla belum terbaca langsung sebagai eksposur kerugian lingkungan pada
+valuasi emiten. Dashboard menjawab seberapa besar eksposur tiap sektor dan bagaimana target
+reduksi karhutla dapat mengubah biaya lingkungan dan skor risiko portofolio.
+
+TUJUAN
+------
+  - Menyajikan ringkasan eksekutif karhutla nasional (KPI, tren, peta intensitas, top provinsi).
+  - Menghitung rasio eksposur kerugian lingkungan (Environmental Liability Ratio) per sektor.
+  - Menyediakan simulasi target reduksi, sektor, dan skenario iklim terhadap risiko portofolio.
+
+FITUR UTAMA
+-----------
+  - Executive Summary dengan filter tahun dan provinsi: total luas karhutla 2020 sampai 2026
+    sebesar 2.784.739 Ha dengan estimasi kerugian Rp 24.402,9 miliar, serta rata-rata return 17
+    emiten sampel +24% (IHSG +8% QoQ Q3 2026) pada tampilan default.
+  - Tile map 38 provinsi, top 10 provinsi berdasarkan kerugian dan luas terbakar (nilai
+    tertinggi: Nusa Tenggara Timur 676.603 Ha), serta kejadian karhutla bulanan 2026.
+  - Financial Risk Analysis dengan filter sektor: scatter ELR vs return, heatmap eksposur sektor
+    per tahun, matriks provinsi per tahun, dan sinyal risiko emiten (High Risk, Medium Risk, ESG
+    Leader).
+  - Interactive Calculator: target reduksi 10% sampai 50%, sektor, dan skenario Kondisi Normal
+    vs El Nino, dengan waterfall pemulihan eksposur dan gauge risk score.
+  - Panduan & Metodologi serta keterbatasan data yang dinyatakan terbuka.
+
+KEY RESOURCE
+------------
+  - Tim: Tim SDAC 2026, IPB University (nama anggota tidak tercantum pada file)
+  - Kompetisi: Smart Data Analytics Competition 2026, bidang Akuntansi Keberlanjutan
+  - Sumber data: SiPongi/Kemenhut (luas karhutla), BNPB InaRISK (potensi kerugian), BNPB Data
+    Bencana (976 kejadian, 1 Jan sampai 14 Okt 2026), BEI/IDX Quarterly Statistics Q3 2026
+  - Tools: Microsoft Excel: formula INDEX/MATCH, SUMPRODUCT, Data Validation (dropdown),
+    conditional formatting; sheet Calc_Engine, Data_Master, dan Data_Markets
+  - Metodologi: Estimasi kerugian = luas terbakar x kerugian InaRISK per Ha; ELR = rata-rata
+    kerugian nasional / kapitalisasi sampel; Risk Score = 100 x (0,4 ELR + 0,3 intensitas lahan
+    + 0,3 volatilitas return)
+  - Klasifikasi skor: < 40 Tangguh, 40 sampai 70 Waspada, >= 70 Rentan
+  - Keterbatasan: Data IDX hanya kuartalan sehingga belum dapat dipakai untuk uji kausalitas;
+    kelompok perkebunan memakai proksi emiten agribisnis hilir
+
+ALUR SINGKAT
+------------
+Data resmi dari empat sumber dimasukkan ke Data_Master dan Data_Markets, dihitung di
+Calc_Engine, lalu ditampilkan di tiga sheet dashboard yang bereaksi terhadap filter dan input
+kalkulator.
+
+DESIGN SYSTEM (RINGKAS)
+-----------------------
+Dashboard bertema gelap merah dengan font Inter, kartu KPI, dan storytelling KPI, temuan utama,
+akar masalah, hingga rekomendasi kebijakan. Warna merah menandai risiko, kuning kewaspadaan, dan
+hijau ketahanan.
+Palet: Night #0C0507, Crimson #7F1112, Alert Red #FF4D55, Rose #FF8A90, Blue #6EA8FF, Green
+#22C55E, Light #E6E6EA
+Font: Inter
+
+DIAGRAM
+-------
+  - diagram_alur_data_dashboard.png: Alur Data Dashboard Green Portfolio Risk
+  - diagram_formula_risk_score.png: Formula Green Portfolio Risk Score
