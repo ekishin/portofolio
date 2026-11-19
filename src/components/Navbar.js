@@ -76,7 +76,7 @@ export default function Navbar() {
   }, [open]);
 
   return (
-    <header className="page-width sticky top-0 z-50 pt-4">
+    <header className="page-width sticky top-0 z-50 pt-[max(1rem,env(safe-area-inset-top))]">
       <div className="relative">
         <nav
           className="grid h-14 grid-cols-[1fr_auto] items-center gap-3 rounded-full border border-white/50 bg-white/45 px-4 shadow-[0_8px_30px_rgba(24,24,27,0.06)] backdrop-blur-md sm:h-16 sm:px-5 md:grid-cols-[1fr_auto_1fr]"

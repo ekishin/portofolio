@@ -11,16 +11,26 @@ import "./reveal.css";
 const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta",
   subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata = {
   title: `${profile.name} | Portfolio`,
   description: `${profile.headline} — ${profile.availability.status} · ${profile.availability.period}`,
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#fafafa",
 };
 
 export default function RootLayout({ children }) {

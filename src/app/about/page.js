@@ -37,41 +37,41 @@ export default function AboutPage() {
         className="pointer-events-none absolute inset-x-0 top-0 h-[28rem] bg-[radial-gradient(ellipse_at_top,_rgba(16,185,129,0.08),_transparent_55%)]"
       />
 
-      <div className="page-width relative pt-14 pb-20 lg:pt-20 lg:pb-28">
-        <section className="mb-16 lg:mb-20">
-          <Reveal className="mb-10 md:mb-12" animateOnMount>
-            <h1 className="text-4xl font-semibold tracking-tight text-zinc-900 sm:text-5xl lg:text-6xl">
+      <div className="page-width relative pt-12 pb-16 sm:pt-14 sm:pb-20 lg:pt-20 lg:pb-28">
+        <section className="mb-14 sm:mb-16 lg:mb-20">
+          <Reveal className="mb-8 sm:mb-10 md:mb-12">
+            <h1 className="type-display text-[2rem] text-zinc-900 sm:text-4xl md:text-5xl lg:text-6xl">
               About Me
             </h1>
           </Reveal>
 
-          <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-16">
-            <Reveal className="order-1 lg:col-span-5" animateOnMount>
-              <div className="group relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-3xl bg-zinc-100 lg:max-w-none">
+          <div className="grid grid-cols-1 items-start gap-8 sm:gap-10 lg:grid-cols-12 lg:gap-16">
+            <Reveal className="order-1 lg:col-span-5" delay={0.04}>
+              <div className="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-2xl bg-zinc-100 sm:max-w-md sm:rounded-3xl lg:max-w-none">
                 <Image
                   src={profile.photo}
                   alt={profile.name}
                   fill
                   priority
-                  className="object-cover object-top grayscale transition-[filter,transform] duration-500 group-hover:scale-[1.03] group-hover:grayscale-0"
-                  sizes="(max-width: 1024px) 90vw, 420px"
+                  className="object-cover object-[center_20%]"
+                  sizes="(max-width: 640px) 92vw, (max-width: 1024px) 90vw, 420px"
                 />
               </div>
             </Reveal>
 
-            <div className="order-2 flex flex-col gap-10 lg:col-span-7 lg:gap-12">
+            <div className="order-2 flex flex-col gap-8 sm:gap-10 lg:col-span-7 lg:gap-12">
               {visibleText(about.whoAmI) ? (
-                <Reveal animateOnMount>
-                  <p className="text-lg leading-8 text-zinc-600 sm:text-xl sm:leading-9">
+                <Reveal delay={0.06}>
+                  <p className="text-base leading-7 text-zinc-600 sm:text-lg sm:leading-8 md:text-xl md:leading-9">
                     {about.whoAmI}
                   </p>
                 </Reveal>
               ) : null}
 
-              <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-10">
+              <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 sm:gap-10">
                 {visibleText(about.approach) ? (
-                  <Reveal animateOnMount>
-                    <h2 className="mb-3 text-xs font-semibold tracking-[0.16em] text-zinc-500 uppercase">
+                  <Reveal delay={0.08}>
+                    <h2 className="type-eyebrow mb-3 text-xs text-zinc-500">
                       Approach
                     </h2>
                     <p className="text-base leading-7 text-zinc-600">
@@ -81,8 +81,8 @@ export default function AboutPage() {
                 ) : null}
 
                 {visibleText(about.lookingFor) ? (
-                  <Reveal animateOnMount>
-                    <h2 className="mb-3 text-xs font-semibold tracking-[0.16em] text-zinc-500 uppercase">
+                  <Reveal delay={0.1}>
+                    <h2 className="type-eyebrow mb-3 text-xs text-zinc-500">
                       Looking for
                     </h2>
                     <p className="text-base leading-7 text-zinc-600">
@@ -93,14 +93,14 @@ export default function AboutPage() {
               </div>
 
               {personalDetails.length > 0 ? (
-                <Reveal animateOnMount>
-                  <dl className="grid grid-cols-1 gap-x-10 gap-y-5 border-t border-zinc-200 pt-8 sm:grid-cols-2">
+                <Reveal delay={0.12}>
+                  <dl className="grid grid-cols-1 gap-x-10 gap-y-5 border-t border-zinc-200 pt-7 sm:grid-cols-2 sm:pt-8">
                     {personalDetails.map((item) => (
                       <div key={item.label}>
-                        <dt className="text-xs font-semibold tracking-[0.14em] text-zinc-500 uppercase">
+                        <dt className="type-eyebrow text-xs text-zinc-500">
                           {item.label}
                         </dt>
-                        <dd className="mt-1.5 text-base font-medium text-zinc-900">
+                        <dd className="mt-1.5 text-base font-medium break-words text-zinc-900">
                           {item.href ? (
                             <a
                               href={item.href}
@@ -122,17 +122,20 @@ export default function AboutPage() {
         </section>
 
         {visibleExperience.length > 0 ? (
-          <section className="mb-16 border-t border-zinc-200 pt-16 lg:mb-20 lg:pt-20">
+          <section className="mb-14 border-t border-zinc-200 pt-12 sm:mb-16 sm:pt-16 lg:mb-20 lg:pt-20">
             <Reveal>
               <SectionHeading eyebrow="Career path" title="Experience" />
             </Reveal>
-            <Reveal>
+            <Reveal delay={0.06}>
               <ExperienceTimeline items={visibleExperience} />
             </Reveal>
           </section>
         ) : null}
 
-        <section id="achievements" className="border-t border-zinc-200 pt-16 lg:pt-20">
+        <section
+          id="achievements"
+          className="border-t border-zinc-200 pt-12 sm:pt-16 lg:pt-20"
+        >
           <Reveal>
             <SectionHeading eyebrow="Proof" title="Achievements" />
           </Reveal>

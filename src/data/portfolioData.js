@@ -7,9 +7,9 @@ import { projects as generatedProjects } from "./projectsData";
 
 export const profile = {
   name: "Eki Shinta Maharani",
-  headline: "Full-stack developer",
+  headline: "Fullstack Web Developer",
   bio: "I build reliable APIs ✨, clear data dashboards, and modern web and mobile apps 🌐",
-  photo: "/images/profile.jpg",
+  photo: "/images/ekishin.png",
   availability: {
     status: "Available for internship",
     period: "January 2027",
@@ -27,25 +27,25 @@ export const howIWork = [
   {
     title: "Understand",
     description:
-      "Clarify goals, users, and constraints before writing a single line of code.",
+      "Clarify goals, users, and system requirements before writing a single line of code.",
     icon: "understand",
   },
   {
     title: "Design",
     description:
-      "Map flows, UI structure, and system docs so the build stays intentional.",
+      "Architect database schemas, MVC structures, and high-fidelity UI/UX prototypes.",
     icon: "design",
   },
   {
     title: "Build",
     description:
-      "Ship reliable APIs, clear dashboards, and useful web or mobile experiences.",
+      "Execute clean, modular code under structured SDLC across web, mobile, and API systems.",
     icon: "build",
   },
   {
     title: "Deliver",
     description:
-      "Test, refine, and hand off something that is ready to use in the real world.",
+      "Verify quality through black-box and security testing, deploy to production, and maintain documentation.",
     icon: "deliver",
   },
 ];
@@ -56,7 +56,7 @@ export const about = {
   approach:
     "Proficient in translating complex business requirements into structured system documentation (SRS, UML, ERD), intuitive UI prototypes, and scalable web/mobile architectures.",
   lookingFor:
-    "Currently focused on building high-impact digital products across 10+ technical projects while seeking a Software Engineering or Web Developer role.",
+    "Currently focused on building high-impact digital products across 10+ technical projects while Available for internship a Web Developer role.",
   personalDetails: [
     { label: "Name", value: "Eki Shinta Maharani" },
     { label: "Education", value: "IPB University" },
@@ -125,10 +125,9 @@ export const achievements = [
     title: "Hak Atas Kekayaan Intelektual (HAKI) - TechnoPlay",
     issuer: "Ministry of Law of the Republic of Indonesia",
     year: "2026",
-    proofImage:
-      "/images/certificates/sertifikat_2026-06-23_lampiran-pencipta.jpg",
-    proofPdf: "/certificates/sertifikat_2026-06-23.pdf",
-    proofPosition: "50% 28%",
+    proofImage: "/images/certificates/haki_cover.png",
+    proofPdf: "/certificates/haki_sertifikat.pdf",
+    proofPosition: "50% 50%",
     featured: true,
   },
   {

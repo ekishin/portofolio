@@ -240,10 +240,16 @@
 
   .how-copy {
     width: 100%;
+    padding-right: 0;
+  }
+
+  .how-copy .how-title {
+    font-size: 1.65rem;
   }
 
   .how-copy .how-lede {
     max-width: none;
+    font-size: 0.95rem;
   }
 
   .how-phone {
@@ -251,8 +257,18 @@
     max-width: none;
     height: auto;
     aspect-ratio: auto;
-    min-height: 280px;
+    min-height: 260px;
     border-radius: 18px;
+    padding: 28px 22px 68px;
+  }
+
+  .how-phone h3 {
+    font-size: 1.25rem;
+  }
+
+  .how-next {
+    width: 44px;
+    height: 44px;
   }
 }
 

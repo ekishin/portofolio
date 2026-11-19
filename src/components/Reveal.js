@@ -1,20 +1,10 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
-import {
-  fadeUpHidden,
-  fadeUpShown,
-  motionEase,
-  scrollViewport,
-} from "../lib/motion";
+import { fadeUpShown, motionEase, useMotionProfile } from "../lib/motion";
 
 function motionOf(as) {
   return motion[as] || motion.div;
-}
-
-function hiddenState(variant) {
-  if (variant === "pop") return { opacity: 0, y: 18, scale: 0.97 };
-  return fadeUpHidden;
 }
 
 export function Reveal({
@@ -26,7 +16,12 @@ export function Reveal({
   variant = "up",
 }) {
   const reduceMotion = useReducedMotion();
+  const { fadeUpHidden, duration, scrollViewport } = useMotionProfile();
   const MotionTag = motionOf(as);
+  const hidden =
+    variant === "pop"
+      ? { opacity: 0, y: fadeUpHidden.y, scale: 0.98 }
+      : fadeUpHidden;
 
   if (reduceMotion) {
     const Tag = as;
@@ -37,9 +32,9 @@ export function Reveal({
     return (
       <MotionTag
         className={className}
-        initial={hiddenState(variant)}
+        initial={hidden}
         animate={fadeUpShown}
-        transition={{ duration: 0.55, delay, ease: motionEase }}
+        transition={{ duration, delay, ease: motionEase }}
       >
         {children}
       </MotionTag>
@@ -49,10 +44,10 @@ export function Reveal({
   return (
     <MotionTag
       className={className}
-      initial={hiddenState(variant)}
+      initial={hidden}
       whileInView={fadeUpShown}
       viewport={scrollViewport}
-      transition={{ duration: 0.5, delay, ease: motionEase }}
+      transition={{ duration, delay, ease: motionEase }}
     >
       {children}
     </MotionTag>
@@ -63,12 +58,14 @@ export function RevealGroup({
   children,
   className = "",
   as = "div",
-  stagger = 0.08,
+  stagger,
   delay = 0,
   animateOnMount = false,
 }) {
   const reduceMotion = useReducedMotion();
+  const { scrollViewport, stagger: profileStagger } = useMotionProfile();
   const MotionTag = motionOf(as);
+  const resolvedStagger = stagger ?? profileStagger;
 
   if (reduceMotion) {
     const Tag = as;
@@ -81,7 +78,10 @@ export function RevealGroup({
       variants={{
         hidden: {},
         show: {
-          transition: { staggerChildren: stagger, delayChildren: delay },
+          transition: {
+            staggerChildren: resolvedStagger,
+            delayChildren: delay,
+          },
         },
       }}
       initial="hidden"
@@ -96,6 +96,7 @@ export function RevealGroup({
 
 export function RevealItem({ children, className = "", as = "div" }) {
   const reduceMotion = useReducedMotion();
+  const { fadeUpHidden, duration } = useMotionProfile();
   const MotionTag = motionOf(as);
 
   if (reduceMotion) {
@@ -107,11 +108,10 @@ export function RevealItem({ children, className = "", as = "div" }) {
     <MotionTag
       className={className}
       variants={{
-        hidden: { opacity: 0, y: 18 },
+        hidden: fadeUpHidden,
         show: {
-          opacity: 1,
-          y: 0,
-          transition: { duration: 0.5, ease: motionEase },
+          ...fadeUpShown,
+          transition: { duration, ease: motionEase },
         },
       }}
     >

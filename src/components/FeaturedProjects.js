@@ -3,35 +3,38 @@
 import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import ProjectCard from "./ProjectCard";
-import {
-  motionEase,
-  projectCardReveal,
-  scrollViewport,
-} from "../lib/motion";
-
-const headerVariants = {
-  hidden: { opacity: 0, y: 18 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: motionEase },
-  },
-};
-
-const gridVariants = {
-  hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.05,
-    },
-  },
-};
+import { motionEase, useMotionProfile } from "../lib/motion";
 
 export default function FeaturedProjects({ projects = [] }) {
   const reduceMotion = useReducedMotion();
+  const {
+    projectCardReveal,
+    scrollViewport,
+    fadeUpHidden,
+    fadeUpShown,
+    duration,
+    stagger,
+  } = useMotionProfile();
 
   if (!projects.length) return null;
+
+  const headerVariants = {
+    hidden: fadeUpHidden,
+    show: {
+      ...fadeUpShown,
+      transition: { duration, ease: motionEase },
+    },
+  };
+
+  const gridVariants = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: stagger,
+        delayChildren: 0.04,
+      },
+    },
+  };
 
   return (
     <section
@@ -46,10 +49,8 @@ export default function FeaturedProjects({ projects = [] }) {
         viewport={scrollViewport}
       >
         <div className="space-y-2">
-          <p className="text-sm font-medium tracking-[0.16em] text-zinc-500 uppercase">
-            Selected work
-          </p>
-          <h2 className="text-3xl font-semibold tracking-tight text-zinc-900">
+          <p className="type-eyebrow text-zinc-500">Selected work</p>
+          <h2 className="type-display text-3xl text-zinc-900">
             Featured projects
           </h2>
           <p className="max-w-2xl text-sm leading-6 text-zinc-600 sm:text-base">

@@ -2,32 +2,7 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import SafeImage from "./SafeImage";
-import { motionEase, scrollViewport } from "../lib/motion";
-
-const sectionVariants = {
-  hidden: { opacity: 0, y: 22 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, ease: motionEase },
-  },
-};
-
-const groupVariants = {
-  hidden: {},
-  show: {
-    transition: { staggerChildren: 0.1, delayChildren: 0.04 },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 18 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: motionEase },
-  },
-};
+import { motionEase, useMotionProfile } from "../lib/motion";
 
 function DiagramImage({ src, alt }) {
   if (!src) return null;
@@ -48,19 +23,27 @@ function DiagramImage({ src, alt }) {
 
 function CaseSection({ title, children, className = "" }) {
   const reduceMotion = useReducedMotion();
+  const { fadeUpHidden, fadeUpShown, duration, scrollViewport } =
+    useMotionProfile();
+
+  const sectionVariants = {
+    hidden: fadeUpHidden,
+    show: {
+      ...fadeUpShown,
+      transition: { duration, ease: motionEase },
+    },
+  };
 
   return (
     <motion.section
-      className={`space-y-5 border-t border-zinc-200 pt-10 ${className}`.trim()}
+      className={`space-y-4 border-t border-zinc-200 pt-8 sm:space-y-5 sm:pt-10 ${className}`.trim()}
       variants={sectionVariants}
       initial={reduceMotion ? false : "hidden"}
       whileInView="show"
       viewport={scrollViewport}
     >
       {title ? (
-        <h2 className="text-2xl font-semibold tracking-tight text-zinc-900">
-          {title}
-        </h2>
+        <h2 className="type-display text-2xl text-zinc-900">{title}</h2>
       ) : null}
       {children}
     </motion.section>
@@ -69,7 +52,6 @@ function CaseSection({ title, children, className = "" }) {
 
 export default function ProjectCaseStudy({
   title,
-  heroMockup,
   problem,
   solutionPoints = [],
   designSystemImage,
@@ -79,25 +61,35 @@ export default function ProjectCaseStudy({
   keyFeatures = [],
 }) {
   const reduceMotion = useReducedMotion();
+  const {
+    fadeUpHidden,
+    fadeUpShown,
+    duration,
+    scrollViewport,
+    stagger,
+  } = useMotionProfile();
   const showProblemSolution = Boolean(problem) || solutionPoints.length > 0;
+  const hasArchitecture = Boolean(showArchitecture && architectureImage);
+  const hasFlow = Boolean(flowImage);
+  const showArchitectureFlowPair = hasArchitecture && hasFlow;
+
+  const groupVariants = {
+    hidden: {},
+    show: {
+      transition: { staggerChildren: stagger, delayChildren: 0.04 },
+    },
+  };
+
+  const itemVariants = {
+    hidden: fadeUpHidden,
+    show: {
+      ...fadeUpShown,
+      transition: { duration, ease: motionEase },
+    },
+  };
 
   return (
-    <div className="mt-12 space-y-10">
-      {heroMockup ? (
-        <CaseSection title="UI Mockups">
-          <div className="relative aspect-[16/10] overflow-hidden rounded-3xl border border-zinc-200 bg-zinc-100 sm:aspect-[16/9]">
-            <SafeImage
-              src={heroMockup}
-              alt={`${title} mockup`}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 960px"
-              priority
-            />
-          </div>
-        </CaseSection>
-      ) : null}
-
+    <div className="mt-12 space-y-10 sm:mt-14 lg:mt-16">
       {showProblemSolution ? (
         <motion.section
           className="border-t border-zinc-200 pt-10"
@@ -112,9 +104,7 @@ export default function ProjectCaseStudy({
                 className="space-y-4 lg:pr-10"
                 variants={itemVariants}
               >
-                <p className="text-sm font-medium tracking-[0.16em] text-zinc-500 uppercase">
-                  Problem Statement
-                </p>
+                <p className="type-eyebrow text-zinc-900">Problem Statement</p>
                 <p className="text-base leading-7 text-zinc-600">{problem}</p>
               </motion.div>
             ) : (
@@ -130,9 +120,7 @@ export default function ProjectCaseStudy({
                 }`}
                 variants={itemVariants}
               >
-                <p className="text-sm font-medium tracking-[0.16em] text-zinc-500 uppercase">
-                  Objectives & Solution
-                </p>
+                <p className="type-eyebrow text-zinc-900">Objectives & Solution</p>
                 <ul className="space-y-3">
                   {solutionPoints.map((point) => (
                     <li
@@ -162,20 +150,44 @@ export default function ProjectCaseStudy({
         </CaseSection>
       ) : null}
 
-      {showArchitecture ? (
-        <CaseSection title="Architecture">
-          <DiagramImage
-            src={architectureImage}
-            alt={`${title} architecture`}
-          />
+      {showArchitectureFlowPair ? (
+        <CaseSection>
+          <div className="grid gap-10 lg:grid-cols-2 lg:gap-0">
+            <div className="space-y-4 lg:pr-10">
+              <h2 className="type-display text-2xl text-zinc-900">
+                Architecture
+              </h2>
+              <DiagramImage
+                src={architectureImage}
+                alt={`${title} architecture`}
+              />
+            </div>
+            <div className="space-y-4 border-t border-zinc-200 pt-10 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-10">
+              <h2 className="type-display text-2xl text-zinc-900">
+                System Flow
+              </h2>
+              <DiagramImage src={flowImage} alt={`${title} system flow`} />
+            </div>
+          </div>
         </CaseSection>
-      ) : null}
+      ) : (
+        <>
+          {hasArchitecture ? (
+            <CaseSection title="Architecture">
+              <DiagramImage
+                src={architectureImage}
+                alt={`${title} architecture`}
+              />
+            </CaseSection>
+          ) : null}
 
-      {flowImage ? (
-        <CaseSection title="System Flow">
-          <DiagramImage src={flowImage} alt={`${title} system flow`} />
-        </CaseSection>
-      ) : null}
+          {hasFlow ? (
+            <CaseSection title="System Flow">
+              <DiagramImage src={flowImage} alt={`${title} system flow`} />
+            </CaseSection>
+          ) : null}
+        </>
+      )}
 
       {keyFeatures.length > 0 ? (
         <CaseSection title="Key Features">

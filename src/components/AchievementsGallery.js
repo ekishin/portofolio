@@ -65,23 +65,49 @@ function ProofVisual({ item, sizes, hoverZoom = false, detail = false }) {
     );
   }
 
-  // Modal: prefer readable PDF when available.
   const pdfSrc = detail ? detailPdfSrc(item) : "";
-  if (pdfSrc) {
+  const cover = item.proofImage || "";
+  const coverIsImage = cover && !isPdfPath(cover);
+
+  // Modal: show cover image when available. PDFs open via dedicated link —
+  // iframe PDF viewers are unreliable across Chrome/Safari/Edge.
+  if (detail && coverIsImage) {
+    const position = item.proofPosition || "50% 42%";
     return (
-      <iframe
-        src={`${pdfSrc}#toolbar=0&navpanes=0`}
-        title={item.title}
-        className="absolute inset-0 h-full w-full border-0 bg-white"
+      <Image
+        src={cover}
+        alt={`${item.title} certificate`}
+        fill
+        style={{ objectPosition: position }}
+        className="object-contain p-2"
+        sizes={sizes}
+        priority
       />
     );
   }
 
-  const cover = item.proofImage || item.proofPdf || "";
+  if (detail && pdfSrc) {
+    return (
+      <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-zinc-50 px-6 text-center">
+        <PdfPreview title={item.title} />
+        <a
+          href={pdfSrc}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex min-h-11 items-center justify-center rounded-full bg-zinc-900 px-5 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 active:translate-y-0"
+        >
+          Open PDF
+        </a>
+      </div>
+    );
+  }
 
   // Strip/thumbnail: image cover, or PDF placeholder if cover is PDF-only.
-  if (isPdfPath(cover)) {
-    return <PdfPreview title={item.title} compact />;
+  if (!coverIsImage) {
+    const fallback = item.proofPdf || cover;
+    if (isPdfPath(fallback)) {
+      return <PdfPreview title={item.title} compact />;
+    }
   }
 
   const position = item.proofPosition || "50% 42%";
@@ -116,7 +142,7 @@ function CertificateFrame({ item, onOpen, sizes }) {
     <button
       type="button"
       onClick={() => onOpen(item)}
-      className="group/product relative block h-64 w-[min(78vw,20rem)] shrink-0 overflow-hidden rounded-2xl border border-zinc-200 bg-white text-left sm:h-80 sm:w-[24rem] md:h-96 md:w-[28rem]"
+      className="group/product relative block h-56 w-[min(82vw,18.5rem)] shrink-0 overflow-hidden rounded-2xl border border-zinc-200 bg-white text-left sm:h-80 sm:w-[24rem] md:h-96 md:w-[28rem]"
     >
       <div className="absolute inset-0 bg-zinc-50">
         <ProofVisual item={item} sizes={sizes} hoverZoom />
@@ -287,17 +313,17 @@ export default function AchievementsGallery({ featured = [], all = [] }) {
       {mounted && open
         ? createPortal(
             <div
-              className="fixed inset-0 z-[100] flex items-center justify-center bg-zinc-950/50 p-4 sm:p-8"
+              className="fixed inset-0 z-[100] flex items-center justify-center bg-zinc-950/50 p-3 sm:p-6 lg:p-8"
               role="dialog"
               aria-modal="true"
               aria-label="Certificates gallery"
               onClick={close}
             >
               <div
-                className="flex max-h-[70vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-2xl"
+                className="flex max-h-[92vh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-2xl"
                 onClick={(event) => event.stopPropagation()}
               >
-                <div className="flex shrink-0 items-center justify-between gap-3 border-b border-zinc-200 bg-white px-4 py-3">
+                <div className="flex shrink-0 items-center justify-between gap-3 border-b border-zinc-200 bg-white px-4 py-3 sm:px-5">
                   <div className="min-w-0">
                     <p className="text-xs font-medium tracking-[0.16em] text-zinc-500 uppercase">
                       Certificates
@@ -316,17 +342,11 @@ export default function AchievementsGallery({ featured = [], all = [] }) {
                   </button>
                 </div>
 
-                <div className="min-h-0 flex-1 overflow-y-auto p-3 sm:p-4">
+                <div className="min-h-0 flex-1 overflow-y-auto p-3 sm:p-5">
                   {active ? (
-                    <div className="space-y-3">
-                      <div
-                        className={`relative mx-auto w-full overflow-hidden rounded-xl bg-zinc-100 ${
-                          detailPdfSrc(active)
-                            ? "aspect-[3/4] max-h-[52vh]"
-                            : "aspect-[4/3] max-h-[48vh]"
-                        }`}
-                      >
-                        <ProofVisual item={active} sizes="60vw" detail />
+                    <div className="space-y-3 sm:space-y-4">
+                      <div className="relative mx-auto aspect-[4/3] max-h-[74vh] w-full overflow-hidden rounded-xl bg-zinc-100">
+                        <ProofVisual item={active} sizes="90vw" detail />
                       </div>
                       <div className="flex flex-wrap items-end justify-between gap-3">
                         <div>
@@ -341,13 +361,25 @@ export default function AchievementsGallery({ featured = [], all = [] }) {
                             </p>
                           ) : null}
                         </div>
-                        <button
-                          type="button"
-                          className="text-sm font-semibold text-zinc-900 underline decoration-zinc-300 underline-offset-4 transition hover:decoration-zinc-900"
-                          onClick={() => setActive(null)}
-                        >
-                          Back to all
-                        </button>
+                        <div className="flex flex-wrap items-center gap-4">
+                          {detailPdfSrc(active) ? (
+                            <a
+                              href={detailPdfSrc(active)}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-sm font-semibold text-zinc-900 underline decoration-zinc-300 underline-offset-4 transition hover:decoration-zinc-900"
+                            >
+                              Open PDF
+                            </a>
+                          ) : null}
+                          <button
+                            type="button"
+                            className="text-sm font-semibold text-zinc-900 underline decoration-zinc-300 underline-offset-4 transition hover:decoration-zinc-900"
+                            onClick={() => setActive(null)}
+                          >
+                            Back to all
+                          </button>
+                        </div>
                       </div>
                     </div>
                   ) : (

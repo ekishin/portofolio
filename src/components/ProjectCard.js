@@ -7,7 +7,7 @@ import { isTodo, visibleText, visibleUrl } from "../lib/content";
 function cardClassName(interactive) {
   return `group flex h-full flex-col overflow-hidden rounded-3xl border border-zinc-200 bg-white ${
     interactive
-      ? "transition-[transform,border-color,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-zinc-300 hover:shadow-[0_10px_28px_rgba(24,24,27,0.08)] active:translate-y-0 active:scale-[0.99]"
+      ? "transition-[transform,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-zinc-300 active:translate-y-0 active:scale-[0.99]"
       : ""
   }`;
 }

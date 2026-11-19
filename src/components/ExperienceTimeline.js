@@ -1,9 +1,13 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+} from "motion/react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-
+import ScrollWordText from "./ScrollWordText";
 import { motionEase } from "../lib/motion";
 
 function ExperienceRow({
@@ -14,11 +18,22 @@ function ExperienceRow({
   onSelect,
   rowRef,
 }) {
+  const localRef = useRef(null);
   const reduceMotion = useReducedMotion();
+
+  const { scrollYProgress } = useScroll({
+    target: localRef,
+    offset: ["start 0.9", "start 0.35"],
+  });
+
+  const setRefs = (node) => {
+    localRef.current = node;
+    if (typeof rowRef === "function") rowRef(node);
+  };
 
   return (
     <li
-      ref={rowRef}
+      ref={setRefs}
       data-index={index}
       className={`exp-timeline__item relative grid list-none items-center gap-5 py-8 lg:grid-cols-2 lg:gap-10 lg:py-10 ${
         isActive ? "is-active" : ""
@@ -35,7 +50,7 @@ function ExperienceRow({
             ? { opacity: 1, x: 0, y: 0 }
             : isActive
               ? { opacity: 1, x: 0, y: 0 }
-              : { opacity: 0.32, x: -12, y: 8 }
+              : { opacity: 0.38, x: -10, y: 6 }
         }
         transition={{ duration: 0.36, ease: motionEase }}
       >
@@ -71,17 +86,23 @@ function ExperienceRow({
                 </span>
               )}
             </span>
-            <span className="truncate text-sm font-semibold text-zinc-800">
-              {item.orgShort || item.org}
-            </span>
+            <ScrollWordText
+              text={item.orgShort || item.org}
+              progress={scrollYProgress}
+              reducedMotion={Boolean(reduceMotion)}
+              className="min-w-0 truncate text-sm font-semibold text-zinc-800"
+            />
             <span className="ml-auto flex-shrink-0 rounded-full border border-zinc-200 bg-zinc-50 px-2 py-0.5 text-[11px] font-medium text-zinc-500">
               {item.year || item.period}
             </span>
           </span>
 
-          <span className="mt-1.5 block text-[0.95rem] font-semibold tracking-tight text-zinc-900 sm:text-base">
-            {item.role}
-          </span>
+          <ScrollWordText
+            text={item.role}
+            progress={scrollYProgress}
+            reducedMotion={Boolean(reduceMotion)}
+            className="mt-1.5 block text-[0.95rem] font-semibold tracking-tight text-zinc-900 sm:text-base"
+          />
 
           <span className="mt-1 flex flex-wrap items-center gap-2 text-[11px] text-zinc-500">
             {item.location ? <span>{item.location}</span> : null}

@@ -22,7 +22,7 @@ function TextMarqueeRow({ text }) {
 
   return (
     <div className="relative overflow-hidden">
-      <div className="marquee-track flex w-max items-center whitespace-nowrap text-center font-sans text-[2.1rem] leading-none font-bold tracking-[-0.03em] text-zinc-300 md:text-[2.9rem]">
+      <div className="marquee-track type-display flex w-max items-center whitespace-nowrap text-center text-[2.35rem] leading-none text-zinc-300 sm:text-[2.6rem] md:text-[3.25rem]">
         <div className="flex">{items}</div>
         <div className="flex" aria-hidden="true">
           {items}
@@ -34,7 +34,7 @@ function TextMarqueeRow({ text }) {
 
 function LogoMarqueeRow({ logos }) {
   const renderStrip = (suffix) => (
-    <div className="flex items-center gap-9 px-5 md:gap-11 md:px-6">
+    <div className="flex items-center gap-8 px-4 sm:gap-10 sm:px-5 md:gap-12 md:px-6">
       {logos.map((logo) => (
         <div
           key={`${suffix}-${logo.name}`}
@@ -49,7 +49,7 @@ function LogoMarqueeRow({ logos }) {
   );
 
   return (
-    <div className="relative overflow-hidden py-2.5 md:py-3">
+    <div className="relative overflow-hidden py-3 md:py-4">
       <div className="marquee-track marquee-reverse flex w-max items-center">
         {renderStrip("a")}
         <div aria-hidden="true">{renderStrip("b")}</div>
@@ -60,7 +60,7 @@ function LogoMarqueeRow({ logos }) {
 
 export default function Marquee({ text = "Fullstack Developer" }) {
   return (
-    <div className="relative mt-4 pb-2 md:mt-5 md:pb-0">
+    <div className="relative mt-6 pb-2 md:mt-8 md:pb-0">
       <section aria-hidden="true">
         <TextMarqueeRow text={text} />
         <LogoMarqueeRow logos={skillLogos} />

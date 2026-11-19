@@ -8,50 +8,85 @@
   --muted: #71717a;
   --border: #e4e4e7;
   --accent: #18181b;
-  /* Type scale — one system across pages */
+  /* One type system — Plus Jakarta Sans + Geist Mono accents */
   --font-weight-heading: 600;
   --font-weight-body: 400;
   --font-weight-label: 500;
   --tracking-heading: -0.025em;
   --tracking-eyebrow: 0.16em;
+  --leading-body: 1.65;
+  --leading-heading: 1.15;
   /* Fluid width: no hard 1152/1440 cap — only side gutters. */
   --page-px: 1.25rem;
+  /* Shared vertical rhythm between major blocks */
+  --section-space: 3.5rem;
+  --section-space-lg: 5rem;
 }
 
 @media (min-width: 640px) {
   :root {
     --page-px: 1.75rem;
+    --section-space: 4rem;
   }
 }
 
 @media (min-width: 1024px) {
   :root {
     --page-px: clamp(2rem, 4vw, 4rem);
+    --section-space: 4.5rem;
+    --section-space-lg: 6rem;
   }
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
 }
 
 .page-width {
   width: 100%;
   max-width: none;
   margin-inline: auto;
-  padding-inline: var(--page-px);
+  padding-inline: max(var(--page-px), env(safe-area-inset-left, 0px))
+    max(var(--page-px), env(safe-area-inset-right, 0px));
   box-sizing: border-box;
+}
+
+.section-y {
+  padding-block: var(--section-space);
+}
+
+.section-y-lg {
+  padding-block: var(--section-space-lg);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-plus-jakarta);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-weight: var(--font-weight-body);
+  line-height: var(--leading-body);
   letter-spacing: 0;
   -webkit-font-smoothing: antialiased;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+a,
+button {
+  touch-action: manipulation;
+  font-family: inherit;
+}
+
+button,
+[role="button"] {
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 h1,
@@ -61,6 +96,38 @@ h4 {
   font-family: inherit;
   font-weight: var(--font-weight-heading);
   letter-spacing: var(--tracking-heading);
+  line-height: var(--leading-heading);
+}
+
+p {
+  font-family: inherit;
+  font-weight: var(--font-weight-body);
+}
+
+/* Shared type roles — keep pages on one scale */
+.type-display {
+  font-family: inherit;
+  font-weight: var(--font-weight-heading);
+  letter-spacing: var(--tracking-heading);
+  line-height: var(--leading-heading);
+}
+
+.type-eyebrow {
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-label);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+.type-label {
+  font-family: inherit;
+  font-weight: var(--font-weight-label);
+}
+
+.type-mono {
+  font-family: var(--font-mono);
 }
 
 @keyframes splash-logo-pulse {

@@ -29,18 +29,18 @@ function SkillCard({ name }) {
   const icon = getSkillIcon(name);
 
   return (
-    <div className="group flex h-full flex-col items-center justify-center rounded-2xl border border-zinc-200/80 bg-zinc-50/80 p-6 transition-all duration-300 hover:-translate-y-2 hover:border-zinc-400 hover:bg-zinc-100">
-      <div className="mb-4 flex h-12 w-12 items-center justify-center pointer-events-none">
+    <div className="group flex h-full flex-col items-center justify-center rounded-2xl border border-zinc-200/80 bg-zinc-50/80 p-6 transition-[transform,border-color,background-color] duration-300 ease-out hover:-translate-y-1.5 hover:border-zinc-400 hover:bg-zinc-100">
+      <div className="pointer-events-none mb-4 flex h-12 w-12 items-center justify-center">
         {icon ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img src={icon} alt="" className="h-full w-full object-contain" />
         ) : (
-          <span className="text-lg font-bold text-zinc-400">
+          <span className="text-lg font-semibold text-zinc-400">
             {name.slice(0, 1)}
           </span>
         )}
       </div>
-      <span className="text-center text-sm font-semibold text-zinc-900">
+      <span className="text-center text-sm font-semibold tracking-tight text-zinc-900">
         {name}
       </span>
     </div>
