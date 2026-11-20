@@ -104,12 +104,10 @@ export default function Navbar() {
 
           <div className="flex items-center justify-end gap-2">
             <a
-              href={profile.cvUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/#contact"
               className="hidden min-h-10 items-center justify-center whitespace-nowrap rounded-full bg-zinc-900 px-4 text-sm font-semibold text-white transition-transform duration-200 hover:-translate-y-0.5 hover:bg-zinc-800 active:translate-y-0 active:scale-[0.98] md:inline-flex"
             >
-              Read my CV
+              Contact
             </a>
 
             <button
@@ -166,13 +164,11 @@ export default function Navbar() {
                   />
                 ))}
                 <a
-                  href={profile.cvUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/#contact"
                   className="mt-2 inline-flex min-h-11 items-center justify-center rounded-full bg-zinc-900 px-4 text-sm font-semibold text-white transition-transform duration-200 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]"
                   onClick={() => setOpen(false)}
                 >
-                  Read my CV
+                  Contact
                 </a>
               </div>
             </div>

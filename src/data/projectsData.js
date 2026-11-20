@@ -50,12 +50,12 @@ export const projects = [
   },
   {
     "slug": "roadasafe",
-    "title": "RoadSafe",
+    "title": "RoadaSafe",
     "date": "November 2026",
-    "summary": "RoadSafe is an intelligent road damage reporting and assessment platform. Citizens, volunteers, and drivers report potholes through two distinct modes: a hands-free real-time HUD camera that captures frames automatically, or manual photo uploads. A YOLO11-seg model detects potholes along with their polygon masks, enabling the system to compute an objective Urgency Score (0–100) classified into Low, Medium, or High priority. All reports are spatially mapped using PostgreSQL + PostGIS so municipal officers (Dishub / Dinas PU) can verify reports, navigate to locations, and update repair statuses.",
+    "summary": "RoadaSafe is an intelligent road damage reporting and assessment platform. Citizens, volunteers, and drivers report potholes through two distinct modes: a hands-free real-time HUD camera that captures frames automatically, or manual photo uploads. A YOLO11-seg model detects potholes along with their polygon masks, enabling the system to compute an objective Urgency Score (0–100) classified into Low, Medium, or High priority. All reports are spatially mapped using PostgreSQL + PostGIS so municipal officers (Dishub / Dinas PU) can verify reports, navigate to locations, and update repair statuses.",
     "role": "Machine Learning Engineer",
     "featured": true,
-    "featuredOrder": 2,
+    "featuredOrder": 4,
     "hasDetailPage": true,
     "order": 2,
     "categories": [
@@ -107,7 +107,7 @@ export const projects = [
     "summary": "TechnoPlay is a mobile Augmented Reality (AR) learning application developed for the Virtual Technology coursework. Executed by a 3-person team over a disciplined 4-week timeline, the project delivers a stable, pedagogically clear marker-based AR application featuring three interactive learning challenges. The application's educational framework and interactive design successfully secured an official Intellectual Property Right (HAKI).",
     "role": "Unity Engine Programmer",
     "featured": true,
-    "featuredOrder": 1,
+    "featuredOrder": 2,
     "hasDetailPage": true,
     "order": 3,
     "categories": [
@@ -152,8 +152,8 @@ export const projects = [
     "date": "November 2025",
     "summary": "Boysan Multimedia is an event organizer, multimedia, and entertainment company operating under the tagline \"Weaving Moments, Creating Memories.\" This web platform serves as an official public company profile while providing an internal Content Management System (CMS). The system supports three distinct actors: Visitors, Clients, and Admins, alongside external WhatsApp integration.",
     "role": "System Analyst",
-    "featured": false,
-    "featuredOrder": null,
+    "featured": true,
+    "featuredOrder": 1,
     "hasDetailPage": true,
     "order": 4,
     "categories": [
@@ -436,8 +436,8 @@ export const projects = [
     "date": "September 2025",
     "summary": "JagaSenja is an elderly health reminder application designed around the theme \"Health for All\". The platform bridges two distinct user groups: Guardians (family members or caregivers) who configure health schedules remotely, and Seniors (Lansia) who interact with an ultra-simplified, high-accessibility interface.",
     "role": "UI/UX Designer & Mobile Dev",
-    "featured": true,
-    "featuredOrder": 4,
+    "featured": false,
+    "featuredOrder": null,
     "hasDetailPage": true,
     "order": 10,
     "categories": [

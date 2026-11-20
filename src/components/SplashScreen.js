@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-const HOLD_MS = 2500;
+const HOLD_MS = 4000;
 const FADE_MS = 500;
 const STORAGE_KEY = "portfolio-splash-seen";
 

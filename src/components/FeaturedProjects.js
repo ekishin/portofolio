@@ -35,8 +35,9 @@ export default function FeaturedProjects({ projects = [] }) {
           Featured projects
         </h2>
         <p className="max-w-2xl text-sm leading-6 text-zinc-600 sm:text-base">
-          Four projects spanning AR learning, road intelligence, family
-          finance, and elderly care — chosen to show full-stack range quickly.
+          Four projects spanning company profile web, AR learning, family
+          finance, and road intelligence — chosen to show full-stack range
+          quickly.
         </p>
       </motion.div>
 

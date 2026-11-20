@@ -7,7 +7,7 @@ import { projects as generatedProjects } from "./projectsData";
 
 export const profile = {
   name: "Eki Shinta Maharani",
-  headline: "Fullstack Web Developer",
+  headline: "Fullstack Developer",
   bio: "I build reliable APIs ✨, clear data dashboards, and modern web and mobile apps 🌐",
   photo: "/images/ekishin.png",
   aboutPhoto: "/images/ekishin-about-zinc.jpg",
