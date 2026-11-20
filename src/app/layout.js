@@ -1,4 +1,5 @@
 import { Geist_Mono, Plus_Jakarta_Sans } from "next/font/google";
+import ContactSection from "../components/ContactSection";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import SplashScreen from "../components/SplashScreen";
@@ -51,6 +52,7 @@ export default function RootLayout({ children }) {
         <main id="main" className="flex-1">
           {children}
         </main>
+        <ContactSection />
         <Footer />
       </body>
     </html>

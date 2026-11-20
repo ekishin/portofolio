@@ -101,10 +101,62 @@
   }
 }
 
+/* Certificate achievements — continuous dual-row marquee */
+.cert-marquee {
+  position: relative;
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 5%,
+    #000 95%,
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 5%,
+    #000 95%,
+    transparent
+  );
+}
+
+.cert-marquee__track {
+  display: flex;
+  width: max-content;
+  gap: 0;
+  animation: marquee-left 58s linear infinite;
+  will-change: transform;
+}
+
+.cert-marquee__track--reverse {
+  animation-name: marquee-right;
+  animation-duration: 68s;
+}
+
+.cert-marquee__track.is-paused,
+.cert-marquee:hover .cert-marquee__track {
+  animation-play-state: paused;
+}
+
+.cert-marquee__strip {
+  display: flex;
+  align-items: stretch;
+  gap: 1.25rem;
+  padding-inline: 0.35rem;
+}
+
+@media (min-width: 768px) {
+  .cert-marquee__strip {
+    gap: 1.75rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .floating,
   .animate-cursor,
-  .marquee-track {
+  .marquee-track,
+  .cert-marquee__track {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;

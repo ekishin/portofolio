@@ -37,7 +37,7 @@ export default function AboutPage() {
         className="pointer-events-none absolute inset-x-0 top-0 h-[28rem] bg-[radial-gradient(ellipse_at_top,_rgba(16,185,129,0.08),_transparent_55%)]"
       />
 
-      <div className="page-width relative pt-12 pb-16 sm:pt-14 sm:pb-20 lg:pt-20 lg:pb-28">
+      <div className="page-width relative pt-12 pb-14 sm:pt-14 sm:pb-16 lg:pt-20 lg:pb-18">
         <section className="mb-14 sm:mb-16 lg:mb-20">
           <Reveal className="mb-8 sm:mb-10 md:mb-12">
             <h1 className="type-display text-[2rem] text-zinc-900 sm:text-4xl md:text-5xl lg:text-6xl">
@@ -49,11 +49,11 @@ export default function AboutPage() {
             <Reveal className="order-1 lg:col-span-5" delay={0.04}>
               <div className="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-2xl bg-zinc-100 sm:max-w-md sm:rounded-3xl lg:max-w-none">
                 <Image
-                  src={profile.photo}
+                  src={profile.aboutPhoto || profile.photo}
                   alt={profile.name}
                   fill
                   priority
-                  className="object-cover object-[center_20%]"
+                  className="object-cover object-[center_48%]"
                   sizes="(max-width: 640px) 92vw, (max-width: 1024px) 90vw, 420px"
                 />
               </div>
@@ -126,9 +126,9 @@ export default function AboutPage() {
             <Reveal>
               <SectionHeading eyebrow="Career path" title="Experience" />
             </Reveal>
-            <Reveal delay={0.06}>
+            <div className="mt-2">
               <ExperienceTimeline items={visibleExperience} />
-            </Reveal>
+            </div>
           </section>
         ) : null}
 
@@ -137,13 +137,17 @@ export default function AboutPage() {
           className="border-t border-zinc-200 pt-12 sm:pt-16 lg:pt-20"
         >
           <Reveal>
-            <SectionHeading eyebrow="Proof" title="Achievements" />
+            <div data-achievements-heading>
+              <SectionHeading eyebrow="Proof" title="Achievements" />
+            </div>
           </Reveal>
           <Reveal delay={0.08}>
-            <AchievementsGallery
-              featured={featuredAchievements}
-              all={achievements}
-            />
+            <div data-achievements-gallery>
+              <AchievementsGallery
+                featured={featuredAchievements}
+                all={achievements}
+              />
+            </div>
           </Reveal>
         </section>
       </div>

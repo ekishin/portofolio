@@ -10,6 +10,7 @@ export const profile = {
   headline: "Fullstack Web Developer",
   bio: "I build reliable APIs ✨, clear data dashboards, and modern web and mobile apps 🌐",
   photo: "/images/ekishin.png",
+  aboutPhoto: "/images/ekishin-about-zinc.jpg",
   availability: {
     status: "Available for internship",
     period: "January 2027",
@@ -19,7 +20,8 @@ export const profile = {
 
 export const contacts = {
   email: "ekishintamaharani@gmail.com",
-  instagram: "https://www.instagram.com/xishin_/",
+  instagram:
+    "https://www.instagram.com/xishin_?mdxt=ZW5wdGpuejU3eG1v&utm_source=qr",
   linkedin: "https://www.linkedin.com/in/ekishinta/",
 };
 
@@ -81,16 +83,40 @@ export const languages = [];
 export const experience = [
   {
     role: "Secretary & Treasurer of Human Resource Development Division",
-    org: "Kesatuan Mahasiswa Hindu Dharma IPB",
-    orgShort: "KMHD IPB",
+    org: "KMHD IPB University",
+    orgShort: "KMHD IPB University",
     location: "Bogor",
     type: "Organization",
-    year: "2025–Present",
-    period: "Jan 2025 – Present",
+    year: "2026",
+    period: "January 2025 – December 2026",
     logo: "/images/org/logo-kmhd-ipb.png",
-    photo: "/images/org/kmhd-activity.jpg",
+    photo: "/images/org/kmhd-3.jpg",
+    photos: [
+      "/images/org/kmhd-3.jpg",
+      "/images/org/kmhd-1.jpg",
+      "/images/org/kmhd-2.jpg",
+    ],
+    certificateUrl: "/certificates/kmhd-psdm-certificate.pdf",
     description:
-      "Managed administrative documentation, program proposals, and financial budgeting for division-wide cadre development programs with 100% financial accountability. Streamlined internal administration and member performance tracking.",
+      "Managed administrative documentation, work proposals, and financial budgets for the cadre development division with 100% financial accountability, while coordinating key divisional programs including KMHD Mengajar, KMHD Ceria, and Suksesi.",
+  },
+  {
+    role: "Event Division Staff",
+    org: "KMHD Ceria Open House 63",
+    orgShort: "KMHD Ceria Open House 63",
+    location: "Bogor",
+    type: "Organization",
+    year: "2026",
+    period: "August 2026",
+    logo: "/images/org/logo-kmhd-ipb.png",
+    photo: "/images/org/kmhd-ceria-oh-1.jpg",
+    photos: [
+      "/images/org/kmhd-ceria-oh-1.jpg",
+      "/images/org/kmhd-ceria-oh-2.jpg",
+      "/images/org/kmhd-ceria-oh-3.jpg",
+    ],
+    description:
+      "Conceptualized the freshman welcoming program (Open House 63) under the KMHD Ceria initiative and coordinated on-site execution to ensure timely delivery.",
   },
   {
     role: "Event Division Staff",
@@ -99,11 +125,29 @@ export const experience = [
     location: "Jakarta",
     type: "Event",
     year: "2026",
-    period: "Jun 2026 – Jul 2026",
+    period: "June – July 2026",
     logo: "/images/org/logo-kmhdi.png",
     photo: "/images/org/rakernas.jpeg",
+    photos: ["/images/org/rakernas.jpeg"],
     description:
       "Conceptualized and executed end-to-end event rundowns and plenary session flows for a national-scale student conference attended by delegates across Indonesia.",
+  },
+  {
+    role: "Secretary & Treasurer",
+    org: "Social Project — Panti Asuhan Mizan Amanah",
+    orgShort: "Social Project — Panti Asuhan Mizan Amanah",
+    location: "Bogor",
+    type: "Volunteering",
+    year: "2026",
+    period: "February – March 2026",
+    logo: "/images/org/logo-tpl-sv-ipb.png",
+    photo: "/images/org/mizan-1.jpg",
+    photos: ["/images/org/mizan-1.jpg", "/images/org/mizan-2.jpg"],
+    ctaUrl:
+      "https://www.kompasiana.com/lopesmedia04487/6a04b41534777c6a6a28e552/mahasiswa-sekolah-vokasi-ipb-university-gelar-kegiatan-sosial-dan-edukasi-akidah-di-panti-asuhan-mizan-amanah-pandu-raya-bogor",
+    ctaLabel: "Article",
+    description:
+      "Managed permit administration, donation tracking, and transparent financial reporting for social charity and child mentoring activities at Mizan Amanah Orphanage.",
   },
   {
     role: "Head of Public Relations Division",
@@ -112,11 +156,47 @@ export const experience = [
     location: "Bogor",
     type: "Organization",
     year: "2025",
-    period: "Aug 2025 – Nov 2025",
+    period: "August – November 2025",
     logo: "/images/org/logo-tpl-sv-ipb.png",
     photo: "/images/org/site.jpeg",
+    photos: ["/images/org/site.jpeg"],
     description:
       "Directed creative content production and digital campaign strategies as Head of Public Relations, generating 5k+ views per post and driving a 150+ follower growth while maintaining a cohesive visual identity across departmental platforms. Directed communication timelines and participant onboarding information, achieving smooth cross-divisional coordination.",
+  },
+  {
+    role: "Design, Decoration & Documentation Staff",
+    org: "Karma KMHD IPB",
+    orgShort: "Karma KMHD IPB",
+    location: "Bogor",
+    type: "Organization",
+    year: "2025",
+    period: "February – May 2025",
+    logo: "/images/org/logo-karma-kmhd.jpg",
+    photo: "/images/org/karma-2025.jpg",
+    photos: [
+      { src: "/images/org/karma-2025.jpg", position: "50% 68%" },
+    ],
+    description:
+      "Designed the visual identity, promotional assets, venue decorations, and event documentation for the Karma 2025.",
+  },
+  {
+    role: "Creative Division Staff",
+    org: "IPB Goes to School",
+    orgShort: "IPB Goes to School",
+    location: "Karawang",
+    type: "Organization",
+    year: "2024–2025",
+    period: "December 2024 – January 2025",
+    logo: "/images/org/logo-igts.png",
+    logoLarge: true,
+    photo: "/images/org/igts-1.jpg",
+    photos: [
+      "/images/org/igts-1.jpg",
+      "/images/org/igts-2.jpg",
+      { src: "/images/org/igts-3.jpg", position: "50% 72%" },
+    ],
+    description:
+      "Designed event posters, Instagram Story frames, Feeds Instagram, and countdown content highlighting the school visit schedule across Karawang, while producing on-site social media content with high school students and assisting with IPB University socialization sessions.",
   },
 ];
 

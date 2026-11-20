@@ -81,7 +81,7 @@ export default async function ProjectDetailPage({ params }) {
         className="pointer-events-none absolute inset-x-0 top-0 h-[24rem] bg-[radial-gradient(ellipse_at_top,_rgba(16,185,129,0.08),_transparent_55%)]"
       />
 
-      <article className="page-width relative pt-10 pb-16 sm:pt-12 sm:pb-20 lg:pt-14 lg:pb-28">
+      <article className="page-width relative pt-10 pb-14 sm:pt-12 sm:pb-16 lg:pt-14 lg:pb-18">
         <header className="grid items-start gap-8 sm:gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-16">
           <div className="flex flex-col gap-5 sm:gap-6 lg:col-span-5">
             <EnterFade delay={0.02}>

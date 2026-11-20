@@ -7,19 +7,20 @@ import {
 } from "motion/react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import ExperiencePhotoCarousel from "./ExperiencePhotoCarousel";
 import ScrollWordText from "./ScrollWordText";
-import { motionEase } from "../lib/motion";
+import { motionEase, useMotionProfile } from "../lib/motion";
 
 function ExperienceRow({
   item,
   index,
-  count,
   isActive,
   onSelect,
   rowRef,
 }) {
   const localRef = useRef(null);
   const reduceMotion = useReducedMotion();
+  const { scrollViewport, fadeUpHidden, duration } = useMotionProfile();
 
   const { scrollYProgress } = useScroll({
     target: localRef,
@@ -31,13 +32,53 @@ function ExperienceRow({
     if (typeof rowRef === "function") rowRef(node);
   };
 
+  const activeState = reduceMotion
+    ? { opacity: 1, x: 0, y: 0 }
+    : isActive
+      ? { opacity: 1, x: 0, y: 0 }
+      : { opacity: 0.38, x: -10, y: 6 };
+
+  const detailState = reduceMotion
+    ? { opacity: 1, y: 0 }
+    : isActive
+      ? { opacity: 1, y: 0 }
+      : { opacity: 0.45, y: 16 };
+
+  const largeLogo = Boolean(item.logoLarge);
+
+  // Balanced enter/exit band so the last item (IGTS) fades the same way
+  // as mid-list items when scrolling toward Achievements and back.
+  const rowViewport = {
+    ...scrollViewport,
+    once: false,
+    amount: 0.28,
+    margin: "-12% 0px -16% 0px",
+  };
+
+  const rowVariants = {
+    hidden: {
+      opacity: fadeUpHidden.opacity,
+      y: fadeUpHidden.y,
+      transition: { duration, ease: motionEase },
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration, ease: motionEase },
+    },
+  };
+
   return (
-    <li
+    <motion.li
       ref={setRefs}
       data-index={index}
       className={`exp-timeline__item relative grid list-none items-center gap-5 py-8 lg:grid-cols-2 lg:gap-10 lg:py-10 ${
         isActive ? "is-active" : ""
       }`}
+      initial={reduceMotion ? false : "hidden"}
+      whileInView={reduceMotion ? undefined : "visible"}
+      variants={reduceMotion ? undefined : rowVariants}
+      viewport={reduceMotion ? undefined : rowViewport}
     >
       <motion.button
         type="button"
@@ -45,13 +86,7 @@ function ExperienceRow({
         aria-current={isActive ? "true" : undefined}
         className="group relative z-10 flex w-full cursor-pointer items-start gap-3.5 text-left sm:gap-4"
         initial={false}
-        animate={
-          reduceMotion
-            ? { opacity: 1, x: 0, y: 0 }
-            : isActive
-              ? { opacity: 1, x: 0, y: 0 }
-              : { opacity: 0.38, x: -10, y: 6 }
-        }
+        animate={activeState}
         transition={{ duration: 0.36, ease: motionEase }}
       >
         <motion.span
@@ -71,13 +106,19 @@ function ExperienceRow({
 
         <span className="min-w-0 flex-1 pt-0.5">
           <span className="flex items-center gap-2.5">
-            <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center overflow-hidden rounded-lg border border-zinc-200 bg-zinc-50 p-1">
+            <span
+              className={`flex flex-shrink-0 items-center justify-center overflow-hidden rounded-lg border border-zinc-200 bg-zinc-50 ${
+                largeLogo
+                  ? "h-12 w-12 p-0.5 sm:h-14 sm:w-14"
+                  : "h-9 w-9 p-1"
+              }`}
+            >
               {item.logo ? (
                 <Image
                   src={item.logo}
                   alt=""
-                  width={36}
-                  height={36}
+                  width={largeLogo ? 56 : 36}
+                  height={largeLogo ? 56 : 36}
                   className="h-full w-full rounded-md object-contain"
                 />
               ) : (
@@ -115,47 +156,42 @@ function ExperienceRow({
               </span>
             ) : null}
           </span>
+
+          {item.description ? (
+            <p className="mt-2.5 text-sm leading-6 text-zinc-600">
+              {item.description}
+            </p>
+          ) : null}
         </span>
       </motion.button>
 
       <motion.aside
-        className="exp-timeline__detail rounded-2xl border border-zinc-200 bg-white p-4 sm:rounded-3xl sm:p-5"
+        className="exp-timeline__detail rounded-2xl border border-zinc-200 bg-white p-3 sm:rounded-3xl sm:p-4"
         initial={false}
-        animate={
-          reduceMotion
-            ? { opacity: 1, y: 0 }
-            : isActive
-              ? { opacity: 1, y: 0 }
-              : { opacity: 0.45, y: 16 }
-        }
+        animate={detailState}
         transition={{ duration: 0.36, ease: motionEase }}
       >
-        {item.photo ? (
-          <div className="relative mb-3.5 aspect-[16/10] overflow-hidden rounded-xl border border-zinc-200 bg-zinc-100 sm:mb-4 sm:rounded-2xl">
-            <Image
-              src={item.photo}
-              alt=""
-              fill
-              className="object-cover transition-transform duration-500 ease-out hover:scale-[1.03]"
-              sizes="(max-width: 1024px) 90vw, 420px"
-            />
-          </div>
-        ) : null}
+        <ExperiencePhotoCarousel item={item} />
 
-        <p className="text-[11px] font-medium tracking-[0.14em] text-zinc-400 uppercase">
-          {item.period}
-        </p>
-        <h3 className="mt-2 text-lg font-semibold tracking-tight text-zinc-900 sm:text-xl">
-          {item.role}
-        </h3>
-        <p className="mt-1 text-sm font-medium text-zinc-500">{item.org}</p>
-        <p className="mt-3 text-sm leading-6 text-zinc-600">{item.description}</p>
+        <div className="mt-3 flex flex-wrap items-center justify-between gap-3 px-0.5 sm:mt-3.5">
+          <p className="text-xs font-medium tracking-wide text-zinc-500 sm:text-sm">
+            {item.period}
+          </p>
 
-        <p className="mt-3 text-[10px] font-medium tracking-[0.12em] text-zinc-400 uppercase">
-          {String(index + 1).padStart(2, "0")} / {String(count).padStart(2, "0")}
-        </p>
+          {item.ctaUrl || item.certificateUrl ? (
+            <a
+              href={item.ctaUrl || item.certificateUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-10 items-center justify-center rounded-full bg-zinc-900 px-4 text-xs font-semibold tracking-wide text-white transition-transform duration-200 hover:-translate-y-0.5 hover:bg-zinc-800 active:translate-y-0 active:scale-[0.98]"
+              onClick={(event) => event.stopPropagation()}
+            >
+              {item.ctaLabel || (item.certificateUrl ? "Certificate" : "Open")}
+            </a>
+          ) : null}
+        </div>
       </motion.aside>
-    </li>
+    </motion.li>
   );
 }
 
@@ -224,7 +260,6 @@ export default function ExperienceTimeline({ items = [] }) {
           key={`${item.role}-${item.org}-${item.period}`}
           item={item}
           index={index}
-          count={items.length}
           isActive={index === active}
           onSelect={selectItem}
           rowRef={(node) => {

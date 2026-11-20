@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
+import { useEffect, useState } from "react";
 import { fadeUpShown, motionEase, useMotionProfile } from "../lib/motion";
 
 function motionOf(as) {
@@ -14,19 +15,28 @@ export function Reveal({
   delay = 0,
   animateOnMount = false,
   variant = "up",
+  once = false,
 }) {
   const reduceMotion = useReducedMotion();
   const { fadeUpHidden, duration, scrollViewport } = useMotionProfile();
+  const [mounted, setMounted] = useState(false);
   const MotionTag = motionOf(as);
+  const Tag = as;
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // SSR + first paint: always visible to avoid hydration mismatch /
+  // stuck opacity-0 when useReducedMotion differs server vs client.
+  if (!mounted || reduceMotion) {
+    return <Tag className={className}>{children}</Tag>;
+  }
+
   const hidden =
     variant === "pop"
       ? { opacity: 0, y: fadeUpHidden.y, scale: 0.98 }
       : fadeUpHidden;
-
-  if (reduceMotion) {
-    const Tag = as;
-    return <Tag className={className}>{children}</Tag>;
-  }
 
   if (animateOnMount) {
     return (
@@ -46,7 +56,7 @@ export function Reveal({
       className={className}
       initial={hidden}
       whileInView={fadeUpShown}
-      viewport={scrollViewport}
+      viewport={{ ...scrollViewport, once: once || scrollViewport.once }}
       transition={{ duration, delay, ease: motionEase }}
     >
       {children}
@@ -64,11 +74,16 @@ export function RevealGroup({
 }) {
   const reduceMotion = useReducedMotion();
   const { scrollViewport, stagger: profileStagger } = useMotionProfile();
+  const [mounted, setMounted] = useState(false);
   const MotionTag = motionOf(as);
+  const Tag = as;
   const resolvedStagger = stagger ?? profileStagger;
 
-  if (reduceMotion) {
-    const Tag = as;
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted || reduceMotion) {
     return <Tag className={className}>{children}</Tag>;
   }
 
@@ -97,10 +112,15 @@ export function RevealGroup({
 export function RevealItem({ children, className = "", as = "div" }) {
   const reduceMotion = useReducedMotion();
   const { fadeUpHidden, duration } = useMotionProfile();
+  const [mounted, setMounted] = useState(false);
   const MotionTag = motionOf(as);
+  const Tag = as;
 
-  if (reduceMotion) {
-    const Tag = as;
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted || reduceMotion) {
     return <Tag className={className}>{children}</Tag>;
   }
 

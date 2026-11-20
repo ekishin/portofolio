@@ -12,7 +12,12 @@ function cardClassName(interactive) {
   }`;
 }
 
-function ProjectCardBody({ project, size = "default", showRole = false }) {
+function ProjectCardBody({
+  project,
+  size = "default",
+  showRole = false,
+  detailHref = null,
+}) {
   const cover = project.mockups?.[0] || "/images/placeholder.svg";
   const techPreview = (project.techStack || []).slice(0, 4);
   const extraTech = Math.max((project.techStack || []).length - techPreview.length, 0);
@@ -78,7 +83,7 @@ function ProjectCardBody({ project, size = "default", showRole = false }) {
           </p>
         </div>
 
-        <div className="mt-auto flex flex-wrap gap-2">
+        <div className={`mt-auto flex flex-wrap gap-2 ${detailHref ? "mb-1" : ""}`}>
           {techPreview.map((tech) => (
             <span
               key={tech}
@@ -93,6 +98,26 @@ function ProjectCardBody({ project, size = "default", showRole = false }) {
             </span>
           ) : null}
         </div>
+
+        {detailHref ? (
+          detailHref.startsWith("/") ? (
+            <Link
+              href={detailHref}
+              className="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-zinc-900 px-4 text-sm font-semibold tracking-wide text-white transition-transform duration-200 hover:-translate-y-0.5 hover:bg-zinc-800 active:translate-y-0 active:scale-[0.98] sm:w-auto sm:self-start"
+            >
+              Project Detail
+            </Link>
+          ) : (
+            <a
+              href={detailHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-zinc-900 px-4 text-sm font-semibold tracking-wide text-white transition-transform duration-200 hover:-translate-y-0.5 hover:bg-zinc-800 active:translate-y-0 active:scale-[0.98] sm:w-auto sm:self-start"
+            >
+              Project Detail
+            </a>
+          )
+        ) : null}
       </div>
     </>
   );
@@ -102,25 +127,40 @@ export default function ProjectCard({
   project,
   size = "default",
   showRole = false,
+  showDetailButton = false,
 }) {
   const demoUrl = visibleUrl(project.demoUrl);
   const repoUrl = visibleUrl(project.repoUrl);
+  const detailHref = project.hasDetailPage
+    ? `/projects/${project.slug}`
+    : null;
+  const externalUrl = demoUrl || repoUrl;
+
+  if (showDetailButton) {
+    const href = detailHref || externalUrl;
+    return (
+      <div className={cardClassName(Boolean(href))}>
+        <ProjectCardBody
+          project={project}
+          size={size}
+          showRole={showRole}
+          detailHref={href}
+        />
+      </div>
+    );
+  }
+
   const body = (
     <ProjectCardBody project={project} size={size} showRole={showRole} />
   );
 
-  if (project.hasDetailPage) {
+  if (detailHref) {
     return (
-      <Link
-        href={`/projects/${project.slug}`}
-        className={cardClassName(true)}
-      >
+      <Link href={detailHref} className={cardClassName(true)}>
         {body}
       </Link>
     );
   }
-
-  const externalUrl = demoUrl || repoUrl;
 
   if (externalUrl) {
     return (

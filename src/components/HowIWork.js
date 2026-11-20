@@ -76,20 +76,27 @@ function useIsMobile(breakpoint = 720) {
   return mobile;
 }
 
-function cardKeyframes(peak, span) {
-  const a = Math.max(0, peak - span);
-  const c = Math.min(1, peak + span);
-  let b = peak;
-  if (b <= a) b = a + 0.001;
-  if (b >= c) b = (a + c) / 2;
-  return [a, b, c];
+/** 4-point curve with a flat clear plateau so each card can stay sharp. */
+function cardKeyframes(peak, rise, dwell) {
+  const halfDwell = dwell / 2;
+  let a = clamp(peak - rise - halfDwell, 0, 1);
+  let b = clamp(peak - halfDwell, 0, 1);
+  let c = clamp(peak + halfDwell, 0, 1);
+  let d = clamp(peak + rise + halfDwell, 0, 1);
+
+  // Keep keys strictly increasing for useTransform.
+  const minGap = 0.012;
+  if (b <= a) b = Math.min(1, a + minGap);
+  if (c <= b) c = Math.min(1, b + minGap);
+  if (d <= c) d = Math.min(1, c + minGap);
+  return [a, b, c, d];
 }
 
-/** Keep first/last cards fully in view — last peak is before scroll end. */
+/** Spread peaks evenly with room for a clear dwell on each card. */
 function peakFor(index, count) {
   if (count <= 1) return 0.5;
-  const start = 0.06;
-  const end = 0.78;
+  const start = 0.1;
+  const end = 0.9;
   return start + (index / (count - 1)) * (end - start);
 }
 
@@ -103,23 +110,23 @@ function HowPhone({
   onNext,
 }) {
   const peak = peakFor(index, count);
-  const span = 0.36;
-  const keys = cardKeyframes(peak, span);
+  // Narrower rise + wider dwell = card stays clear before blurring again.
+  const keys = cardKeyframes(peak, 0.16, 0.18);
 
   const scale = useTransform(
     progress,
     keys,
-    scrubEnabled ? [0.92, 1, 0.92] : [1, 1, 1],
+    scrubEnabled ? [0.92, 1, 1, 0.92] : [1, 1, 1, 1],
   );
   const opacity = useTransform(
     progress,
     keys,
-    scrubEnabled ? [0.4, 1, 0.4] : [1, 1, 1],
+    scrubEnabled ? [0.4, 1, 1, 0.4] : [1, 1, 1, 1],
   );
   const y = useTransform(
     progress,
     keys,
-    scrubEnabled ? [28, 0, 28] : [0, 0, 0],
+    scrubEnabled ? [28, 0, 0, 28] : [0, 0, 0, 0],
   );
 
   return (
@@ -196,10 +203,11 @@ export default function HowIWork({ steps = [] }) {
     scrubEnabled ? [0, -travel] : [0, 0],
   );
 
+  // Snappier follow so a card is centered while its clear plateau is active.
   const x = useSpring(xRaw, {
-    stiffness: 52,
-    damping: 34,
-    mass: 0.55,
+    stiffness: 88,
+    damping: 28,
+    mass: 0.42,
     restDelta: 0.001,
   });
 

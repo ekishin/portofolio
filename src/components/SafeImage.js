@@ -13,6 +13,7 @@ export default function SafeImage({
   className = "",
   sizes,
   priority = false,
+  style,
 }) {
   const [currentSrc, setCurrentSrc] = useState(safeImageSrc(src));
 
@@ -26,6 +27,7 @@ export default function SafeImage({
       className={className}
       sizes={sizes}
       priority={priority}
+      style={style}
       onError={() => {
         if (currentSrc !== "/images/placeholder.svg") {
           setCurrentSrc("/images/placeholder.svg");

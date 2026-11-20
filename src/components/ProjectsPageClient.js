@@ -12,7 +12,7 @@ export default function ProjectsPageClient({ projects }) {
         className="pointer-events-none absolute inset-x-0 top-0 h-[24rem] bg-[radial-gradient(ellipse_at_top,_rgba(16,185,129,0.08),_transparent_55%)]"
       />
 
-      <div className="page-width relative pt-12 pb-16 sm:pt-14 sm:pb-20 lg:pt-20 lg:pb-28">
+      <div className="page-width relative pt-12 pb-14 sm:pt-14 sm:pb-16 lg:pt-20 lg:pb-18">
         <Reveal>
           <SectionHeading eyebrow="Portfolio" title="Projects" />
         </Reveal>

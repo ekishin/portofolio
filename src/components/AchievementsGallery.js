@@ -1,13 +1,8 @@
 "use client";
 
-import {
-  motion,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-} from "motion/react";
+import { useReducedMotion } from "motion/react";
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { isTodo } from "../lib/content";
 
@@ -128,21 +123,12 @@ function ProofVisual({ item, sizes, hoverZoom = false, detail = false }) {
   );
 }
 
-function repeatRow(items, times = 3) {
-  return Array.from({ length: times }, (_, copy) =>
-    items.map((item, index) => ({
-      item,
-      key: `${item.title}-${item.year}-${copy}-${index}`,
-    })),
-  ).flat();
-}
-
 function CertificateFrame({ item, onOpen, sizes }) {
   return (
     <button
       type="button"
       onClick={() => onOpen(item)}
-      className="group/product relative block h-56 w-[min(82vw,18.5rem)] shrink-0 overflow-hidden rounded-2xl border border-zinc-200 bg-white text-left sm:h-80 sm:w-[24rem] md:h-96 md:w-[28rem]"
+      className="group/product relative block h-56 w-[min(82vw,18.5rem)] shrink-0 overflow-hidden rounded-2xl border border-zinc-200 bg-white text-left transition-transform duration-200 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99] sm:h-80 sm:w-[24rem] md:h-96 md:w-[28rem]"
     >
       <div className="absolute inset-0 bg-zinc-50">
         <ProofVisual item={item} sizes={sizes} hoverZoom />
@@ -164,11 +150,50 @@ function CertificateFrame({ item, onOpen, sizes }) {
   );
 }
 
+function CertMarqueeRow({
+  items,
+  onOpen,
+  reverse = false,
+  paused = false,
+  reduceMotion = false,
+}) {
+  const strip = (
+    <div className="cert-marquee__strip">
+      {items.map((item, index) => (
+        <CertificateFrame
+          key={`${item.title}-${item.year}-${index}`}
+          item={item}
+          onOpen={onOpen}
+          sizes="(max-width: 768px) 70vw, 400px"
+        />
+      ))}
+    </div>
+  );
+
+  if (reduceMotion) {
+    return (
+      <div className="overflow-x-auto px-[var(--page-px)] [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        {strip}
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className={`cert-marquee__track ${reverse ? "cert-marquee__track--reverse" : ""} ${
+        paused ? "is-paused" : ""
+      }`}
+    >
+      {strip}
+      <div aria-hidden="true">{strip}</div>
+    </div>
+  );
+}
+
 export default function AchievementsGallery({ featured = [], all = [] }) {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(null);
   const [mounted, setMounted] = useState(false);
-  const sectionRef = useRef(null);
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
@@ -217,36 +242,15 @@ export default function AchievementsGallery({ featured = [], all = [] }) {
     const top = stripSource.slice(0, mid);
     const bottom = stripSource.slice(mid);
     return {
-      topRow: repeatRow(top.length ? top : stripSource, 3),
-      bottomRow: repeatRow(bottom.length ? bottom : stripSource, 3),
+      topRow: top.length ? top : stripSource,
+      bottomRow: bottom.length ? bottom : stripSource,
     };
   }, [stripSource]);
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
-
-  const xTop = useTransform(
-    scrollYProgress,
-    [0, 1],
-    reduceMotion ? [0, 0] : [48, -160],
-  );
-  const xBottom = useTransform(
-    scrollYProgress,
-    [0, 1],
-    reduceMotion ? [0, 0] : [-48, 160],
-  );
 
   if (visibleFeatured.length === 0 && visibleAll.length === 0) return null;
 
   const openItem = (item) => {
     setActive(item);
-    setOpen(true);
-  };
-
-  const openAll = () => {
-    setActive(null);
     setOpen(true);
   };
 
@@ -256,67 +260,32 @@ export default function AchievementsGallery({ featured = [], all = [] }) {
   };
 
   return (
-    <div className="space-y-8">
+    <div>
       {stripSource.length > 0 ? (
-        <div
-          ref={sectionRef}
-          className="relative -mx-[var(--page-px)] overflow-x-clip py-2"
-          style={{
-            maskImage:
-              "linear-gradient(to bottom, transparent, #000 10%, #000 90%, transparent)",
-            WebkitMaskImage:
-              "linear-gradient(to bottom, transparent, #000 10%, #000 90%, transparent)",
-          }}
-        >
-          <motion.div
-            className="mb-5 flex w-max gap-5 px-[var(--page-px)] md:mb-7 md:gap-7"
-            style={{ x: xTop }}
-          >
-            {topRow.map(({ item, key }) => (
-              <CertificateFrame
-                key={key}
-                item={item}
-                onOpen={openItem}
-                sizes="(max-width: 768px) 70vw, 400px"
-              />
-            ))}
-          </motion.div>
-
-          <motion.div
-            className="flex w-max flex-row-reverse gap-5 px-[var(--page-px)] md:gap-7"
-            style={{ x: xBottom }}
-          >
-            {bottomRow.map(({ item, key }) => (
-              <CertificateFrame
-                key={`b-${key}`}
-                item={item}
-                onOpen={openItem}
-                sizes="(max-width: 768px) 70vw, 400px"
-              />
-            ))}
-          </motion.div>
+        <div className="cert-marquee relative -mx-[var(--page-px)] space-y-5 py-2 md:space-y-7">
+          <CertMarqueeRow
+            items={topRow}
+            onOpen={openItem}
+            paused={open}
+            reduceMotion={Boolean(reduceMotion)}
+          />
+          <CertMarqueeRow
+            items={bottomRow}
+            onOpen={openItem}
+            reverse
+            paused={open}
+            reduceMotion={Boolean(reduceMotion)}
+          />
         </div>
       ) : null}
 
-      {visibleAll.length > 0 ? (
-        <div className="flex justify-end">
-          <button
-            type="button"
-            onClick={openAll}
-            className="text-sm font-medium text-zinc-900 underline-offset-4 hover:underline"
-          >
-            View all certificates
-          </button>
-        </div>
-      ) : null}
-
-      {mounted && open
+      {mounted && open && active
         ? createPortal(
             <div
               className="fixed inset-0 z-[100] flex items-center justify-center bg-zinc-950/50 p-3 sm:p-6 lg:p-8"
               role="dialog"
               aria-modal="true"
-              aria-label="Certificates gallery"
+              aria-label="Certificate detail"
               onClick={close}
             >
               <div
@@ -326,16 +295,16 @@ export default function AchievementsGallery({ featured = [], all = [] }) {
                 <div className="flex shrink-0 items-center justify-between gap-3 border-b border-zinc-200 bg-white px-4 py-3 sm:px-5">
                   <div className="min-w-0">
                     <p className="text-xs font-medium tracking-[0.16em] text-zinc-500 uppercase">
-                      Certificates
+                      Certificate
                     </p>
                     <p className="truncate text-sm font-semibold text-zinc-900 sm:text-base">
-                      {active ? active.title : "All certificates"}
+                      {active.title}
                     </p>
                   </div>
                   <button
                     type="button"
                     className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-zinc-300 bg-white text-lg leading-none text-zinc-700 transition-transform hover:-translate-y-0.5 hover:border-zinc-500 active:translate-y-0"
-                    aria-label="Close gallery"
+                    aria-label="Close certificate"
                     onClick={close}
                   >
                     ×
@@ -343,75 +312,33 @@ export default function AchievementsGallery({ featured = [], all = [] }) {
                 </div>
 
                 <div className="min-h-0 flex-1 overflow-y-auto p-3 sm:p-5">
-                  {active ? (
-                    <div className="space-y-3 sm:space-y-4">
-                      <div className="relative mx-auto aspect-[4/3] max-h-[74vh] w-full overflow-hidden rounded-xl bg-zinc-100">
-                        <ProofVisual item={active} sizes="90vw" detail />
-                      </div>
-                      <div className="flex flex-wrap items-end justify-between gap-3">
-                        <div>
-                          {!isTodo(active.issuer) ? (
-                            <p className="text-sm text-zinc-600">
-                              {active.issuer}
-                            </p>
-                          ) : null}
-                          {!isTodo(active.year) ? (
-                            <p className="mt-1 text-xs font-medium tracking-wide text-zinc-400 uppercase">
-                              {active.year}
-                            </p>
-                          ) : null}
-                        </div>
-                        <div className="flex flex-wrap items-center gap-4">
-                          {detailPdfSrc(active) ? (
-                            <a
-                              href={detailPdfSrc(active)}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-sm font-semibold text-zinc-900 underline decoration-zinc-300 underline-offset-4 transition hover:decoration-zinc-900"
-                            >
-                              Open PDF
-                            </a>
-                          ) : null}
-                          <button
-                            type="button"
-                            className="text-sm font-semibold text-zinc-900 underline decoration-zinc-300 underline-offset-4 transition hover:decoration-zinc-900"
-                            onClick={() => setActive(null)}
-                          >
-                            Back to all
-                          </button>
-                        </div>
-                      </div>
+                  <div className="space-y-3 sm:space-y-4">
+                    <div className="relative mx-auto aspect-[4/3] max-h-[74vh] w-full overflow-hidden rounded-xl bg-zinc-100">
+                      <ProofVisual item={active} sizes="90vw" detail />
                     </div>
-                  ) : (
-                    <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3">
-                      {visibleAll.map((item) => (
-                        <button
-                          key={`${item.title}-${item.year}-gallery`}
-                          type="button"
-                          className="group overflow-hidden rounded-xl border border-zinc-200 bg-white text-left transition-transform duration-200 hover:-translate-y-0.5 hover:border-zinc-300 active:translate-y-0"
-                          onClick={() => setActive(item)}
+                    <div className="flex flex-wrap items-end justify-between gap-3">
+                      <div>
+                        {!isTodo(active.issuer) ? (
+                          <p className="text-sm text-zinc-600">{active.issuer}</p>
+                        ) : null}
+                        {!isTodo(active.year) ? (
+                          <p className="mt-1 text-xs font-medium tracking-wide text-zinc-400 uppercase">
+                            {active.year}
+                          </p>
+                        ) : null}
+                      </div>
+                      {detailPdfSrc(active) ? (
+                        <a
+                          href={detailPdfSrc(active)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm font-semibold text-zinc-900 underline decoration-zinc-300 underline-offset-4 transition hover:decoration-zinc-900"
                         >
-                          <div className="relative aspect-[5/4] overflow-hidden bg-zinc-100">
-                            <ProofVisual
-                              item={item}
-                              sizes="(max-width: 640px) 40vw, 160px"
-                              hoverZoom
-                            />
-                          </div>
-                          <div className="space-y-0.5 p-2">
-                            <p className="line-clamp-2 text-[11px] font-semibold text-zinc-900 sm:text-xs">
-                              {item.title}
-                            </p>
-                            {!isTodo(item.year) ? (
-                              <p className="text-[10px] text-zinc-500">
-                                {item.year}
-                              </p>
-                            ) : null}
-                          </div>
-                        </button>
-                      ))}
+                          Open PDF
+                        </a>
+                      ) : null}
                     </div>
-                  )}
+                  </div>
                 </div>
               </div>
             </div>,
